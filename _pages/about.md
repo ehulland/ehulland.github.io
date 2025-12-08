@@ -8,14 +8,15 @@ redirect_from:
   - /about.html
 ---
 
-* Current postdoctoral research consultant in the [Majumder Lab](https://lab.maimunamajumder.com/) at Boston Children's Hospital and Harvard Medical School, focusing on the role of trust (and mistrust) in society and on pandemic preparedness and response. 
+* Currently working as postdoc in the [Department of Viroscience at Erasmus MC] (https://www.erasmusmc.nl/en/research/departments/viroscience), [GGD Rotterdam-Rijnmond](https://www.ggdrotterdamrijnmond.nl/), and the [Pandemic and Disaster Preparedness Center](https://convergence.nl/pandemic-disaster-preparedness-center/) working on the [Frontrunner 5 Project: Integrated early-warning surveillance methods and tools](https://convergence.nl/pandemic-disaster-preparedness-center/research/integrated-early-warning-surveillance-methods-and-tools/).
 
-* Recent PhD graduate in [Global Health - Metrics Track](https://globalhealth.washington.edu/education-training/phd-gh) at the University of Washington, advised by [Dr. David Pigott](https://globalhealth.washington.edu/faculty/david-pigott) focusing on pandemic preparedness and the response to COVID-19. 
+* Previously worked as a postdoctoral research consultant in the [Majumder Lab](https://lab.maimunamajumder.com/) at Boston Children's Hospital and Harvard Medical School, focusing on the role of trust (and mistrust) in society and on pandemic preparedness and response. 
+
+* PhD graduate in [Global Health - Metrics Track](https://globalhealth.washington.edu/education-training/phd-gh) from the University of Washington, advised by [Dr. David Pigott](https://globalhealth.washington.edu/faculty/david-pigott) focusing on pandemic preparedness and the response to COVID-19. 
 
 * Experience in international health, pandemic preparedness, and outbreak response with a strong interest in data science, statistics, and geospatial analyses.
 
-* Research goals include improving pandemic preparedness modeling and response for diseases of epidemic potential.
-Experience in geospatial analysis, forecasting, survey design and analysis, and hierarchical modeling. Proficient in R, SAS, Git processes, some experience in Python. 
+* Research goals include improving pandemic preparedness modeling and response for diseases of epidemic potential. Experience in geospatial analysis, forecasting, survey design and analysis, and hierarchical modeling. Proficient in R, SAS, Git processes, some experience in Python. 
 
 * Relevant coursework includes: Time series analysis, Maximum likelihood estimation Hierarchical modeling, Geospatial analysis.
 

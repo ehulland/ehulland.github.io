@@ -13,13 +13,16 @@ Education
 ======
 * B.S. in Biology and French, Statistics Minor, Pennsylvania State University, 2012
 * MPH in Biostatistics, Emory University Rollins School of Public Health, 2014
-* Ph.D in Global Health - Metrics Track, University of Washington, 2023
+* PhD in Global Health - Metrics Track, University of Washington, 2023
 
 Relevant work experience
 ======
-* 10/2023 - present
+* 10/2025 - present
+  * Department of Viroscience, Erasmus MC, Rotterdam, Netherlands
+    * Postdoctoral Researcher: 10/2025 - present
+* 10/2023 - 10/2025
   * Computational Health Informatics Program, Boston Children's Hospital & Harvard Medical School, Boston, MA
-    * Postdoctoral Research Consultant, Majumder Lab: 10/2023-present
+    * Postdoctoral Research Consultant, Majumder Lab: 10/2023-10/2025
 
 * 09/2018 - 09/2023
   * Institute for Health Metrics and Evaluation, Seattle WA
@@ -54,10 +57,10 @@ Skills
   * JoinPoint (Intermediate)
   * ArcGIS (Intermediate)
   * Open Data Kit (Intermediate)
+  * Python (Low Intermediate)
   * Stata (Basic)
   * EpiInfo (Basic)
   * SPSS (Basic)
-  * Python (Basic)
   * SQL (Basic)
 
 Selected publications
@@ -80,5 +83,5 @@ Professional Organizations
   * American Statistical Association (Member)
 * 2018 - 2024
   * American Society for Tropical Medicine and Hygiene (Member)
-* 2023-2024
+* 2023-2025
   * Society for Epidemiologic Research (Member)
