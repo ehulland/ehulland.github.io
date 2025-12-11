@@ -3,7 +3,7 @@ permalink: /
 title: "About me"
 excerpt: "About me"
 author_profile: true
-redirect_from: 
+redirect_from:
   - /about/
   - /about.html
 ---
@@ -24,93 +24,141 @@ redirect_from:
 
 * Full CV available upon request
 
+## Places I've Lived, Studied, and Worked
 
-<!-- ===================== -->
-<!-- INTERACTIVE LEAFLET MAP -->
-<!-- ===================== -->
-
-<h2>Places I've Lived, Studied, and Worked</h2>
 <p>
-  This interactive map shows my trajectory over time.  
-  Use the dropdown to zoom to a specific place.
+  Scroll through my journey below and watch the map follow along.
 </p>
 
-<label for="placeSelect"><strong>Jump to place:</strong></label>
-<select id="placeSelect">
-  <option value="">– Select a place –</option>
-</select>
+<div class="journey-layout">
+  <!-- Map column -->
+  <div class="journey-map-column">
+    <div id="placesMap"></div>
+  </div>
 
-<div id="placesMap" style="height: 500px; margin-top: 1rem;"></div>
+  <!-- Text / story column -->
+  <div class="journey-text-column">
+    <section class="journey-step" data-place-id="london-canada">
+      <h3>London, Canada – Lived</h3>
+      <p>
+        This is where it started: living in London, Canada.
+      </p>
+    </section>
+
+    <section class="journey-step" data-place-id="pittsburgh">
+      <h3>Pittsburgh, PA, USA – Lived</h3>
+      <p>
+        A chapter spent living in Pittsburgh.
+      </p>
+    </section>
+
+    <section class="journey-step" data-place-id="university-park">
+      <h3>University Park, PA, USA – Bachelor's</h3>
+      <p>
+        Studied for my bachelor's degree at University Park.
+      </p>
+    </section>
+
+    <section class="journey-step" data-place-id="atlanta">
+      <h3>Atlanta, GA, USA – MPH & Work</h3>
+      <p>
+        Completed my MPH and worked in Atlanta.
+      </p>
+    </section>
+
+    <section class="journey-step" data-place-id="seattle">
+      <h3>Seattle, WA, USA – PhD & Work</h3>
+      <p>
+        PhD life (and work) in Seattle.
+      </p>
+    </section>
+
+    <section class="journey-step" data-place-id="utrecht">
+      <h3>Utrecht, Netherlands – Lived & Worked</h3>
+      <p>
+        Living and working in Utrecht.
+      </p>
+    </section>
+  </div>
+</div>
 
 <script>
-  // 1. Your locations
-  const places = [
-    {
+  // --- 1. Define your locations ---
+  const places = {
+    "london-canada": {
       name: "London, Canada",
       coords: [42.9849, -81.2453],
       role: "Lived"
     },
-    {
+    "pittsburgh": {
       name: "Pittsburgh, PA, USA",
       coords: [40.4406, -79.9959],
       role: "Lived"
     },
-    {
+    "university-park": {
       name: "University Park, PA, USA",
       coords: [40.7982, -77.8599],
       role: "Studied (Bachelor's)"
     },
-    {
+    "atlanta": {
       name: "Atlanta, GA, USA",
       coords: [33.7490, -84.3880],
-      role: "Studied (MPH) and worked"
+      role: "Studied (MPH), and worked"
     },
-    {
+    "seattle": {
       name: "Seattle, WA, USA",
       coords: [47.6062, -122.3321],
-      role: "Studied (PhD) and worked"
+      role: "Studied (PhD), and worked"
     },
-    {
+    "utrecht": {
       name: "Utrecht, Netherlands",
       coords: [52.0907, 5.1214],
       role: "Lived and worked"
     }
-  ];
+  };
 
-  // 2. Initialize the map
+  // --- 2. Initialize map ---
   const map = L.map('placesMap');
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
-    attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+    attribution: '&copy; OpenStreetMap contributors'
   }).addTo(map);
 
-  // 3. Add markers + popups + auto-fit bounds
+  // Add markers and compute bounds
   const bounds = L.latLngBounds();
 
-  places.forEach(p => {
-    const marker = L.marker(p.coords).addTo(map);
-    marker.bindPopup(`<strong>${p.name}</strong><br>${p.role}`);
+  Object.values(places).forEach(p => {
+    L.marker(p.coords)
+      .addTo(map)
+      .bindPopup(`<strong>${p.name}</strong><br>${p.role}`);
     bounds.extend(p.coords);
   });
 
-  map.fitBounds(bounds.pad(0.2));
+  map.fitBounds(bounds.pad(0.3));
 
-  // 4. Dropdown “fly-to” location selector
-  const select = document.getElementById('placeSelect');
+  // --- 3. Scroll-driven behavior with IntersectionObserver ---
+  const steps = document.querySelectorAll('.journey-step');
 
-  places.forEach((p, idx) => {
-    const opt = document.createElement('option');
-    opt.value = idx;
-    opt.textContent = p.name + " — " + p.role;
-    select.appendChild(opt);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const placeId = entry.target.dataset.placeId;
+        const place = places[placeId];
+        if (place) {
+          // Highlight active step
+          steps.forEach(s => s.classList.remove('journey-step--active'));
+          entry.target.classList.add('journey-step--active');
+
+          // Fly map to this location
+          map.flyTo(place.coords, 6, { duration: 1.5 });
+        }
+      }
+    });
+  }, {
+    root: null,
+    threshold: 0.5
   });
 
-  select.addEventListener('change', function () {
-    if (this.value === "") return;
-    const idx = parseInt(this.value, 10);
-    const p = places[idx];
-    map.flyTo(p.coords, 10, { duration: 1.5 });
-  });
+  steps.forEach(step => observer.observe(step));
 </script>
-

@@ -1,9 +1,12 @@
+/* Custom styles for scrolling map on About page */
+
 .journey-layout {
   display: flex;
   gap: 2rem;
   margin-top: 2rem;
 }
 
+/* Stack on mobile */
 @media (max-width: 768px) {
   .journey-layout {
     flex-direction: column;
@@ -14,7 +17,7 @@
   flex: 1;
   min-width: 260px;
   position: sticky;
-  top: 6rem;
+  top: 6rem; /* tweak if header overlaps */
   align-self: flex-start;
 }
 
