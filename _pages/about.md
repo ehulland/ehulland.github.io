@@ -7,7 +7,6 @@ redirect_from:
   - /about/
   - /about.html
 ---
-
 * Currently working as postdoc in the [Department of Viroscience at Erasmus MC](https://www.erasmusmc.nl/en/research/departments/viroscience), [GGD Rotterdam-Rijnmond](https://www.ggdrotterdamrijnmond.nl/), and the [Pandemic and Disaster Preparedness Center](https://convergence.nl/pandemic-disaster-preparedness-center/) working on the [Frontrunner 5 Project: Integrated early-warning surveillance methods and tools](https://convergence.nl/pandemic-disaster-preparedness-center/research/integrated-early-warning-surveillance-methods-and-tools/).
 
 * Previously worked as a postdoctoral research consultant in the [Majumder Lab](https://lab.maimunamajumder.com/) at Boston Children's Hospital and Harvard Medical School, focusing on the role of trust (and mistrust) in society and on pandemic preparedness and response. 
@@ -33,7 +32,7 @@ redirect_from:
 <div class="journey-layout">
   <!-- Map column -->
   <div class="journey-map-column">
-    <div id="placesMap"></div>
+    <div id="placesMap" style="width: 100%; height: 400px; border-radius: 8px;"></div>
   </div>
 
   <!-- Text / story column -->
