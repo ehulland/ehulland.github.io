@@ -24,3 +24,93 @@ redirect_from:
 
 * Full CV available upon request
 
+
+<!-- ===================== -->
+<!-- INTERACTIVE LEAFLET MAP -->
+<!-- ===================== -->
+
+<h2>Places I've Lived, Studied, and Worked</h2>
+<p>
+  This interactive map shows my trajectory over time.  
+  Use the dropdown to zoom to a specific place.
+</p>
+
+<label for="placeSelect"><strong>Jump to place:</strong></label>
+<select id="placeSelect">
+  <option value="">– Select a place –</option>
+</select>
+
+<div id="placesMap" style="height: 500px; margin-top: 1rem;"></div>
+
+<script>
+  // 1. Your locations
+  const places = [
+    {
+      name: "London, Canada",
+      coords: [42.9849, -81.2453],
+      role: "Lived"
+    },
+    {
+      name: "Pittsburgh, PA, USA",
+      coords: [40.4406, -79.9959],
+      role: "Lived"
+    },
+    {
+      name: "University Park, PA, USA",
+      coords: [40.7982, -77.8599],
+      role: "Studied (Bachelor's)"
+    },
+    {
+      name: "Atlanta, GA, USA",
+      coords: [33.7490, -84.3880],
+      role: "Studied (MPH) and worked"
+    },
+    {
+      name: "Seattle, WA, USA",
+      coords: [47.6062, -122.3321],
+      role: "Studied (PhD) and worked"
+    },
+    {
+      name: "Utrecht, Netherlands",
+      coords: [52.0907, 5.1214],
+      role: "Lived and worked"
+    }
+  ];
+
+  // 2. Initialize the map
+  const map = L.map('placesMap');
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+  }).addTo(map);
+
+  // 3. Add markers + popups + auto-fit bounds
+  const bounds = L.latLngBounds();
+
+  places.forEach(p => {
+    const marker = L.marker(p.coords).addTo(map);
+    marker.bindPopup(`<strong>${p.name}</strong><br>${p.role}`);
+    bounds.extend(p.coords);
+  });
+
+  map.fitBounds(bounds.pad(0.2));
+
+  // 4. Dropdown “fly-to” location selector
+  const select = document.getElementById('placeSelect');
+
+  places.forEach((p, idx) => {
+    const opt = document.createElement('option');
+    opt.value = idx;
+    opt.textContent = p.name + " — " + p.role;
+    select.appendChild(opt);
+  });
+
+  select.addEventListener('change', function () {
+    if (this.value === "") return;
+    const idx = parseInt(this.value, 10);
+    const p = places[idx];
+    map.flyTo(p.coords, 10, { duration: 1.5 });
+  });
+</script>
+
