@@ -12,6 +12,8 @@ TALKS_DIR = os.path.join(ROOT, '_talks')
 CACHED_FILE = os.path.join(ROOT, 'talkmap', 'geocache.json')
 OUT_DIR = os.path.join(ROOT, 'docs', 'talkmap')
 OUT_FILE = os.path.join(OUT_DIR, 'talks.json')
+ALT_OUT_DIR = os.path.join(ROOT, 'talkmap')
+ALT_OUT_FILE = os.path.join(ALT_OUT_DIR, 'talks.json')
 
 def load_cache():
     if os.path.exists(CACHED_FILE):
@@ -67,6 +69,7 @@ def clean_location(loc):
 
 def main():
     os.makedirs(OUT_DIR, exist_ok=True)
+    os.makedirs(ALT_OUT_DIR, exist_ok=True)
     cache = load_cache()
     session = requests.Session()
     talks = []
@@ -116,8 +119,10 @@ def main():
     talks_sanitized = [sanitize(t) for t in talks]
     with open(OUT_FILE, 'w', encoding='utf-8') as f:
         json.dump(talks_sanitized, f, ensure_ascii=False, indent=2)
+    with open(ALT_OUT_FILE, 'w', encoding='utf-8') as f:
+        json.dump(talks_sanitized, f, ensure_ascii=False, indent=2)
     save_cache(cache)
-    print(f'Wrote {OUT_FILE} with {len(talks)} talks')
+    print(f'Wrote {OUT_FILE} and {ALT_OUT_FILE} with {len(talks)} talks')
 
 if __name__ == '__main__':
     main()
