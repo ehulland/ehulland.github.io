@@ -101,8 +101,21 @@ def main():
             'lat': geoc['lat'],
             'lon': geoc['lon']
         })
+    # sanitize talks values to ensure JSON serializability
+    def sanitize(value):
+        if isinstance(value, (datetime.date, datetime.datetime)):
+            return value.isoformat()
+        if isinstance(value, dict):
+            return {k: sanitize(v) for k, v in value.items()}
+        if isinstance(value, list):
+            return [sanitize(v) for v in value]
+        if isinstance(value, (str, int, float, bool)) or value is None:
+            return value
+        return str(value)
+
+    talks_sanitized = [sanitize(t) for t in talks]
     with open(OUT_FILE, 'w', encoding='utf-8') as f:
-        json.dump(talks, f, ensure_ascii=False, indent=2)
+        json.dump(talks_sanitized, f, ensure_ascii=False, indent=2)
     save_cache(cache)
     print(f'Wrote {OUT_FILE} with {len(talks)} talks')
 
