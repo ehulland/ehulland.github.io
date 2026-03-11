@@ -1,0 +1,26 @@
+{
+  "Philadelphia, Pennsylvania": {
+    "lat": 39.9527237,
+    "lon": -75.1635262
+  },
+  "Chicago, Illinois": {
+    "lat": 41.8755616,
+    "lon": -87.6244212
+  },
+  "National Harbor, MD": {
+    "lat": 38.783342,
+    "lon": -77.0148285
+  },
+  "Seattle, WA": {
+    "lat": 47.6038321,
+    "lon": -122.330062
+  },
+  "Austin, TX": {
+    "lat": 30.2711286,
+    "lon": -97.7436995
+  },
+  "Barcelona, Spain": {
+    "lat": 41.3825802,
+    "lon": 2.177073
+  }
+}
