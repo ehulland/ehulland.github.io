@@ -4,6 +4,7 @@ import re
 import yaml
 import json
 import time
+import datetime
 import requests
 
 ROOT = os.path.dirname(os.path.dirname(__file__))
@@ -51,6 +52,19 @@ def geocode(query, session, cache):
     time.sleep(1)
     return cache[query]
 
+def clean_location(loc):
+    if not loc:
+        return loc
+    s = str(loc)
+    # remove parenthetical virtual notes, standalone 'virtual', and connectors
+    s = re.sub(r"\(.*?virtual.*?\)", "", s, flags=re.I)
+    s = re.sub(r"\bvirtual\b", "", s, flags=re.I)
+    s = re.sub(r"\band\b|\b&\b", ",", s, flags=re.I)
+    s = re.sub(r"\s+,\s+", ", ", s)
+    s = re.sub(r"\s{2,}", " ", s)
+    s = s.strip(' ,')
+    return s
+
 def main():
     os.makedirs(OUT_DIR, exist_ok=True)
     cache = load_cache()
@@ -66,13 +80,21 @@ def main():
         location = fm.get('location')
         venue = fm.get('venue')
         permalink = fm.get('permalink')
-        geoc = geocode(location, session, cache)
+        # clean location strings (remove 'virtual' markers) before geocoding
+        loc_query = clean_location(location)
+        geoc = geocode(loc_query, session, cache)
         if geoc is None:
             print(f"Warning: no geocode for '{location}' in {fname}")
             continue
+        # ensure date is JSON serializable
+        if isinstance(date, (datetime.date, datetime.datetime)):
+            date_val = date.isoformat()
+        else:
+            date_val = str(date) if date is not None else None
+
         talks.append({
             'title': title,
-            'date': date,
+            'date': date_val,
             'location': location,
             'venue': venue,
             'permalink': permalink,
