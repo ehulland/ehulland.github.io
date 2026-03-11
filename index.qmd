@@ -1,0 +1,15 @@
+---
+title: "Welcome"
+---
+
+# Welcome
+
+This is an academic website showcasing research, publications, and presentations.
+
+## About Me
+
+I'm a researcher working on public health, epidemiology, and data science topics.
+
+- [View my full profile](about.qmd)
+- [Browse my publications](publications.qmd)
+- [Where I've presented](talkmap/map.html)

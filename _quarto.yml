@@ -1,0 +1,35 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Ehulland"
+  site-url: "https://ehulland.github.io/"
+  repo-url: "https://github.com/ehulland/ehulland.github.io"
+  
+  navbar:
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "About"
+        href: about.qmd
+      - text: "Publications"
+        href: publications.qmd
+      - text: "Talks"
+        href: talks.qmd
+      - text: "Talk Map"
+        href: talkmap/map.html
+      - text: "Posts"
+        href: posts.qmd
+      - text: "CV"
+        href: cv.qmd
+
+format:
+  html:
+    theme: 
+      light: cosmo
+      dark: darkly
+    toc: false
+
+execute:
+  freeze: auto

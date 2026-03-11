@@ -1,0 +1,16 @@
+---
+title: "About"
+---
+
+# About Me
+
+## Background
+
+Add your educational background and professional experience here.
+
+## Contact
+
+- Email: contact@example.com
+- [GitHub](https://github.com/ehulland)
+
+[Download my CV](files/cv.pdf)

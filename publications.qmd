@@ -1,0 +1,11 @@
+---
+title: "Publications"
+---
+
+# Publications
+
+View my academic publications and research work below.
+
+[Detailed publications list coming soon...]
+
+For more information, see the [_publications folder](_publications/).

@@ -1,0 +1,17 @@
+---
+title: "Curriculum Vitae"
+---
+
+# Curriculum Vitae
+
+## Education
+
+Add education here.
+
+## Experience
+
+Add experience here.
+
+---
+
+[Download CV (PDF)](files/cv.pdf)
