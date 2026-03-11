@@ -1,0 +1,88 @@
+#!/usr/bin/env python3
+import os
+import re
+import yaml
+import json
+import time
+import requests
+
+ROOT = os.path.dirname(os.path.dirname(__file__))
+TALKS_DIR = os.path.join(ROOT, '_talks')
+CACHED_FILE = os.path.join(ROOT, 'talkmap', 'geocache.json')
+OUT_DIR = os.path.join(ROOT, 'docs', 'talkmap')
+OUT_FILE = os.path.join(OUT_DIR, 'talks.json')
+
+def load_cache():
+    if os.path.exists(CACHED_FILE):
+        with open(CACHED_FILE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return {}
+
+def save_cache(cache):
+    os.makedirs(os.path.dirname(CACHED_FILE), exist_ok=True)
+    with open(CACHED_FILE, 'w', encoding='utf-8') as f:
+        json.dump(cache, f, ensure_ascii=False, indent=2)
+
+def parse_frontmatter(path):
+    text = open(path, 'r', encoding='utf-8').read()
+    m = re.search(r'^---\n(.*?)\n---\n', text, re.S)
+    if not m:
+        return {}
+    return yaml.safe_load(m.group(1)) or {}
+
+def geocode(query, session, cache):
+    if not query:
+        return None
+    if query in cache:
+        return cache[query]
+    url = 'https://nominatim.openstreetmap.org/search'
+    params = {'q': query, 'format': 'json', 'limit': 1}
+    headers = {'User-Agent': 'ehulland.github.io geocoder'}
+    resp = session.get(url, params=params, headers=headers, timeout=10)
+    resp.raise_for_status()
+    data = resp.json()
+    if data:
+        lat = float(data[0]['lat'])
+        lon = float(data[0]['lon'])
+        cache[query] = {'lat': lat, 'lon': lon}
+    else:
+        cache[query] = None
+    # be polite
+    time.sleep(1)
+    return cache[query]
+
+def main():
+    os.makedirs(OUT_DIR, exist_ok=True)
+    cache = load_cache()
+    session = requests.Session()
+    talks = []
+    for fname in sorted(os.listdir(TALKS_DIR)):
+        if not fname.endswith('.md'):
+            continue
+        path = os.path.join(TALKS_DIR, fname)
+        fm = parse_frontmatter(path)
+        title = fm.get('title') or fname
+        date = fm.get('date')
+        location = fm.get('location')
+        venue = fm.get('venue')
+        permalink = fm.get('permalink')
+        geoc = geocode(location, session, cache)
+        if geoc is None:
+            print(f"Warning: no geocode for '{location}' in {fname}")
+            continue
+        talks.append({
+            'title': title,
+            'date': date,
+            'location': location,
+            'venue': venue,
+            'permalink': permalink,
+            'lat': geoc['lat'],
+            'lon': geoc['lon']
+        })
+    with open(OUT_FILE, 'w', encoding='utf-8') as f:
+        json.dump(talks, f, ensure_ascii=False, indent=2)
+    save_cache(cache)
+    print(f'Wrote {OUT_FILE} with {len(talks)} talks')
+
+if __name__ == '__main__':
+    main()
