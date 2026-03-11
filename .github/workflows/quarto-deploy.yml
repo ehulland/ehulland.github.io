@@ -16,10 +16,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Quarto
-        uses: quarto-dev/quarto-cli-action@v2
-        with:
-          quarto-version: 'latest'
+      - name: Install Quarto CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq wget
+          TAG=$(wget -qO- https://api.github.com/repos/quarto-dev/quarto-cli/releases/latest | jq -r .tag_name)
+          VER=${TAG#v}
+          ASSET_URL="https://github.com/quarto-dev/quarto-cli/releases/download/${TAG}/quarto-${VER}-linux-amd64.deb"
+          wget -qO quarto.deb "${ASSET_URL}"
+          sudo apt-get install -y ./quarto.deb
 
       - name: Render site with Quarto
         run: quarto render --output-dir docs
