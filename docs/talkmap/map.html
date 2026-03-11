@@ -1,58 +1,45 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Talk map</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
-  <style>html,body,#map{height:100%;margin:0;padding:0}#controls{position:absolute;z-index:400;left:10px;top:10px;background:#fff;padding:8px;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.3)}</style>
-</head>
-<body>
-  <div id="controls">
-    <label for="year">Year:</label>
-    <select id="year"><option value="all">All</option></select>
-  </div>
-  <div id="map" style="height:700px"></div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster-src.js"></script>
+    <!DOCTYPE html>
+    <html>
+    <head>
+    	<title>Leaflet debug page</title>
 
-  <script>
-    const map = L.map('map').setView([30, 10], 2);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19, attribution: '© OpenStreetMap contributors'}).addTo(map);
+    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.css" />
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.js"></script>
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<link rel="stylesheet" href="leaflet_dist/screen.css" />
 
-    const markers = L.markerClusterGroup({showCoverageOnHover:false, maxClusterRadius: 80});
-    let allTalks = [];
+    	<link rel="stylesheet" href="leaflet_dist/MarkerCluster.css" />
+    	<link rel="stylesheet" href="leaflet_dist/MarkerCluster.Default.css" />
+    	<script src="leaflet_dist/leaflet.markercluster-src.js"></script>
+    	<script src="org-locations.js"></script>
 
-    function populateYearFilter(talks){
-      const years = new Set(talks.map(t => (t.date||'').slice(0,4)).filter(Boolean));
-      const sel = document.getElementById('year');
-      Array.from(years).sort().reverse().forEach(y => {
-        const o = document.createElement('option'); o.value = y; o.textContent = y; sel.appendChild(o);
-      });
-      sel.addEventListener('change', () => renderMarkers());
-    }
+    </head>
+    <body>
 
-    function renderMarkers(){
-      markers.clearLayers();
-      const year = document.getElementById('year').value;
-      const filtered = allTalks.filter(t => (year==='all') || ((t.date||'').startsWith(year)));
-      filtered.forEach(t => {
-        const m = L.marker([t.lat, t.lon]);
-        const popup = `<strong>${t.title}</strong><br>${t.date||''}<br>${t.venue||''}<br>${t.location||''}` + (t.permalink?`<br><a href="${t.permalink}">Details</a>`:'');
-        m.bindPopup(popup);
-        markers.addLayer(m);
-      });
-      map.addLayer(markers);
-    }
-
-    fetch('talks.json').then(r=>r.json()).then(data=>{
-      allTalks = data;
-      populateYearFilter(allTalks);
-      renderMarkers();
-    }).catch(err=>{console.error(err);});
-  </script>
-</body>
-</html>
+    	<div id="map"></div>
+    	<span>Mouse over a cluster to see the bounds of its children and click a cluster to zoom to those bounds</span>
+    	<script type="text/javascript">
+    		var tiles = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+              maxZoom: 18,
+              attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
+                    }),
+    			latlng = L.latLng(30, 10);
+    		var map = L.map('map', {center: latlng, zoom: 0.7, layers: [tiles]});
+    		var markers = L.markerClusterGroup({
+    			showCoverageOnHover: false,
+    			maxClusterRadius: 80
+    			});
+    		for (var i = 0; i < addressPoints.length; i++) {
+    			var a = addressPoints[i];
+    			var title = a[0];
+    			var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
+    			marker.bindPopup(title);
+    			markers.addLayer(marker);
+    		}
+    		map.addLayer(markers);
+    		map.zoomIn();
+    	</script>
+    </body>
+    </html>
+    
