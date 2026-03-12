@@ -17,7 +17,7 @@ CV_QMD = ROOT / "cv.qmd"
 POSTS = ROOT / "_posts"
 PUBLICATIONS = ROOT / "_publications"
 TALKS = ROOT / "_talks"
-MAP_LABEL = "Journey Map"
+MAP_LABEL = "Timeline Map"
 
 
 def read_text(path: Path) -> str:
