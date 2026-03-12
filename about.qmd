@@ -15,13 +15,15 @@ title: "About"
 
 * Relevant coursework includes: Time series analysis, Maximum likelihood estimation Hierarchical modeling, Geospatial analysis.
 
-* Extracurricular activities include spending time with my husband, daughter, newborn son, and two dogs exploring our new residence in Utrecht, Netherlands. 
+* Extracurricular activities include spending time with my husband, two young kids, and our dog exploring our new residence in Utrecht, Netherlands. 
 
 * Full CV available upon request
 
 ## Contact
 
-- Email: e.hulland@gmail.com
+- [Email](e.hulland@gmail.com)
 - [GitHub](https://github.com/ehulland)
+- [X](https://x.com/ehulland/)
+- [LinkedIn](https://www.linkedin.com/in/ehulland/)
 
 [Download my CV](files/cv.pdf)
