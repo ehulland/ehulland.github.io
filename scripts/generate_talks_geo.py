@@ -10,6 +10,7 @@ import requests
 ROOT = os.path.dirname(os.path.dirname(__file__))
 TALKS_DIR = os.path.join(ROOT, '_talks')
 CACHED_FILE = os.path.join(ROOT, 'talkmap', 'geocache.json')
+ABOUT_MAP_R_FILE = os.path.join(ROOT, 'map_code.R')
 OUT_DIR = os.path.join(ROOT, 'docs', 'talkmap')
 OUT_FILE = os.path.join(OUT_DIR, 'talks.json')
 ALT_OUT_DIR = os.path.join(ROOT, 'talkmap')
@@ -67,6 +68,51 @@ def clean_location(loc):
     s = s.strip(' ,')
     return s
 
+def parse_r_char_vector(content, field):
+    m = re.search(rf"{field}\s*=\s*c\((.*?)\)", content, re.S)
+    if not m:
+        return []
+    body = m.group(1)
+    return [
+        (a or b)
+        for a, b in re.findall(r'"([^"\\]*(?:\\.[^"\\]*)*)"|\'([^\'\\]*(?:\.[^\'\\]*)*)\'', body)
+    ]
+
+def parse_r_num_vector(content, field):
+    m = re.search(rf"{field}\s*=\s*c\((.*?)\)", content, re.S)
+    if not m:
+        return []
+    body = m.group(1)
+    nums = []
+    for token in body.split(','):
+        token = token.strip()
+        if not token:
+            continue
+        nums.append(float(token))
+    return nums
+
+def load_about_locations():
+    if not os.path.exists(ABOUT_MAP_R_FILE):
+        return []
+    content = open(ABOUT_MAP_R_FILE, 'r', encoding='utf-8').read()
+    names = parse_r_char_vector(content, 'name')
+    lats = parse_r_num_vector(content, 'lat')
+    lngs = parse_r_num_vector(content, 'lng')
+    count = min(len(names), len(lats), len(lngs))
+    out = []
+    for idx in range(count):
+        out.append({
+            'title': f"About: {names[idx]}",
+            'date': None,
+            'location': names[idx],
+            'venue': 'About section location',
+            'permalink': '/about/',
+            'lat': lats[idx],
+            'lon': lngs[idx],
+            'type': 'about'
+        })
+    return out
+
 def main():
     os.makedirs(OUT_DIR, exist_ok=True)
     os.makedirs(ALT_OUT_DIR, exist_ok=True)
@@ -116,13 +162,15 @@ def main():
             return value
         return str(value)
 
-    talks_sanitized = [sanitize(t) for t in talks]
+    about_locations = load_about_locations()
+    combined = talks + about_locations
+    talks_sanitized = [sanitize(t) for t in combined]
     with open(OUT_FILE, 'w', encoding='utf-8') as f:
         json.dump(talks_sanitized, f, ensure_ascii=False, indent=2)
     with open(ALT_OUT_FILE, 'w', encoding='utf-8') as f:
         json.dump(talks_sanitized, f, ensure_ascii=False, indent=2)
     save_cache(cache)
-    print(f'Wrote {OUT_FILE} and {ALT_OUT_FILE} with {len(talks)} talks')
+    print(f'Wrote {OUT_FILE} and {ALT_OUT_FILE} with {len(talks)} talks + {len(about_locations)} about locations')
 
 if __name__ == '__main__':
     main()

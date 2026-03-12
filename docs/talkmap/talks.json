@@ -52,5 +52,75 @@
     "permalink": "/talks/2024-08-26-KDD",
     "lat": 41.3825802,
     "lon": 2.177073
+  },
+  {
+    "title": "About: London, Canada",
+    "date": null,
+    "location": "London, Canada",
+    "venue": "About section location",
+    "permalink": "/about/",
+    "lat": 42.9849,
+    "lon": -81.2453,
+    "type": "about"
+  },
+  {
+    "title": "About: Pittsburgh, PA, USA",
+    "date": null,
+    "location": "Pittsburgh, PA, USA",
+    "venue": "About section location",
+    "permalink": "/about/",
+    "lat": 40.4406,
+    "lon": -79.9959,
+    "type": "about"
+  },
+  {
+    "title": "About: University Park, PA, USA",
+    "date": null,
+    "location": "University Park, PA, USA",
+    "venue": "About section location",
+    "permalink": "/about/",
+    "lat": 40.7982,
+    "lon": -77.8599,
+    "type": "about"
+  },
+  {
+    "title": "About: Paris, France",
+    "date": null,
+    "location": "Paris, France",
+    "venue": "About section location",
+    "permalink": "/about/",
+    "lat": 48.858387,
+    "lon": 2.0180743,
+    "type": "about"
+  },
+  {
+    "title": "About: Atlanta, GA, USA",
+    "date": null,
+    "location": "Atlanta, GA, USA",
+    "venue": "About section location",
+    "permalink": "/about/",
+    "lat": 33.749,
+    "lon": -84.388,
+    "type": "about"
+  },
+  {
+    "title": "About: Seattle, WA, USA",
+    "date": null,
+    "location": "Seattle, WA, USA",
+    "venue": "About section location",
+    "permalink": "/about/",
+    "lat": 47.6062,
+    "lon": -122.3321,
+    "type": "about"
+  },
+  {
+    "title": "About: Utrecht, Netherlands",
+    "date": null,
+    "location": "Utrecht, Netherlands",
+    "venue": "About section location",
+    "permalink": "/about/",
+    "lat": 52.0907,
+    "lon": 5.1214,
+    "type": "about"
   }
 ]
