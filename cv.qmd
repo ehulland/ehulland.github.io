@@ -44,12 +44,12 @@ Skills
 	* Dutch (Beginner)
 * Software and packages:
 	* R software(Advanced)
-	  * Tidyverse, data.table, ggplot2, EpiNow2, EpiEstim, EpiSewer, xgboost, Rshiny, glmnet, stan, forecast, surveillance, keras, incidence, projections, raster, sf, terra, rgdal, gdistance, seegSDM
+		* Tidyverse, data.table, ggplot2, EpiNow2, EpiEstim, EpiSewer, xgboost, Rshiny, glmnet, stan, forecast, surveillance, keras, incidence, projections, raster, sf, terra, rgdal, gdistance, seegSDM
 	* Microsoft Excel, Office, Word, and Powerpoint (Advanced)
 	* SAS and SAS-callable SUDAAN (Intermediate, formerly advanced)
 	* VSCode (Intermediate)
 	* Python (Intermediate)
-	  * •	numpy, matplotlib, transformers, argparse, ollama 
+		* numpy, matplotlib, transformers, argparse, ollama 
 	* SQL (Basic)
 
 Selected publications
