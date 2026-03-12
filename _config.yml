@@ -6,8 +6,8 @@
 # `jekyll serve`. If you change this file, please restart the server process.
 
 # Site Settings
-locale                   : "en-US"
-title                    : "Erin Hulland Frame, MPH, PhD"
+locale                   : "en-NL"
+title                    : "Erin (Hulland) Frame, MPH, PhD"
 title_separator          : "-"
 name                     : &name "Erin (Hulland) Frame"
 description              : &description "Postdoctoral Researcher at ErasmusMC / GGD Rotterdam-Rijnmond and PDPC collaborator"
@@ -32,7 +32,7 @@ comments:
     colorscheme          : # "light" (default), "dark"
 staticman:
   allowedFields          : ['name', 'email', 'url', 'message']
-  branch                 : "gh-pages" # "master", "gh-pages"
+  branch                 : "main" # "master", "gh-pages"
   commitMessage          : "New comment."
   filename               : comment-{@timestamp}
   format                 : "yml"
