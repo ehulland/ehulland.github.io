@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import datetime
 import html
-import os
 import re
 from pathlib import Path
 
@@ -12,10 +11,13 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 DOCS = ROOT / "docs"
 CONFIG = ROOT / "_config.yml"
-ABOUT = ROOT / "_pages" / "about.md"
+ABOUT_QMD = ROOT / "about.qmd"
+ABOUT_MD = ROOT / "_pages" / "about.md"
+CV_QMD = ROOT / "cv.qmd"
 POSTS = ROOT / "_posts"
 PUBLICATIONS = ROOT / "_publications"
 TALKS = ROOT / "_talks"
+MAP_LABEL = "Journey Map"
 
 
 def read_text(path: Path) -> str:
@@ -49,6 +51,48 @@ def md_to_html(text: str) -> str:
     return markdown.markdown(text, extensions=["extra", "sane_lists"])
 
 
+def strip_liquid(text: str) -> str:
+  text = re.sub(r"\{\%.*?\%\}", "", text, flags=re.S)
+  text = re.sub(r"\{\{.*?\}\}", "", text, flags=re.S)
+  return text
+
+
+def first_existing(*paths: Path):
+  for path in paths:
+    if path.exists():
+      return path
+  return None
+
+
+def remove_about_map_section(text: str) -> str:
+  return re.sub(
+      r"\n## Places I've Lived, Studied, and Worked.*?(?=\n## |\Z)",
+      "\n",
+      text,
+      flags=re.S,
+  ).strip() + "\n"
+
+
+def resolve_avatar_path() -> str:
+  docs_images = DOCS / "images"
+  docs_images.mkdir(parents=True, exist_ok=True)
+  candidates = [
+    ROOT / "headshot-color.jpg",
+    ROOT / "headshot_color.jpg",
+    ROOT / "images" / "headshot-color.jpg",
+    ROOT / "images" / "headshot_color.jpg",
+    ROOT / "images" / "profile.png",
+  ]
+  src = first_existing(*candidates)
+  if src is None:
+    return "/images/profile.png"
+  dest_name = "headshot-color" + src.suffix.lower()
+  dest = docs_images / dest_name
+  if src.resolve() != dest.resolve():
+    dest.write_bytes(src.read_bytes())
+  return f"/images/{dest_name}"
+
+
 def page_shell(title: str, content: str, site_title: str):
     full_title = html.escape(site_title) if title == site_title else f"{html.escape(title)} | {html.escape(site_title)}"
     return f'''<!doctype html>
@@ -66,7 +110,7 @@ def page_shell(title: str, content: str, site_title: str):
       <a href="/about.html">About</a>
       <a href="/publications.html">Publications</a>
       <a href="/talks.html">Talks</a>
-      <a href="/talkmap/map.html">Talk Map</a>
+      <a href="/talkmap/map.html">{MAP_LABEL}</a>
       <a href="/posts.html">Posts</a>
       <a href="/cv.html">CV</a>
     </div>
@@ -77,15 +121,13 @@ def page_shell(title: str, content: str, site_title: str):
 '''
 
 
-def render_home(site_title, author):
+def render_home(site_title, author, avatar):
     name = author.get("name", "")
     bio = author.get("bio", "")
     location = author.get("location", "")
     github = author.get("github", "")
     linkedin = author.get("linkedin", "")
     twitter = author.get("twitter", "")
-    avatar = "/images/profile.png"
-
     social = []
     if github:
         social.append(f'<a href="https://github.com/{html.escape(github)}">GitHub</a>')
@@ -116,7 +158,7 @@ def render_home(site_title, author):
       <div class="card"><h3>About</h3><p>Background, research interests, and profile information.</p><a href="/about.html">Open page</a></div>
       <div class="card"><h3>Publications</h3><p>Selected papers and research outputs.</p><a href="/publications.html">Browse publications</a></div>
       <div class="card"><h3>Talks</h3><p>Talks, presentations, and conference appearances.</p><a href="/talks.html">View talks</a></div>
-      <div class="card"><h3>Interactive map</h3><p>Explore presentation locations on an interactive map.</p><a href="/talkmap/map.html">Open talk map</a></div>
+      <div class="card"><h3>{MAP_LABEL}</h3><p>Explore talks, milestones, and places that have shaped my path.</p><a href="/talkmap/map.html">Open {MAP_LABEL.lower()}</a></div>
       <div class="card"><h3>Posts</h3><p>Writing, commentary, and updates.</p><a href="/posts.html">Read posts</a></div>
       <div class="card"><h3>CV</h3><p>Curriculum vitae and professional history.</p><a href="/cv.html">View CV</a></div>
     </div>
@@ -127,14 +169,14 @@ def render_home(site_title, author):
     return page_shell(site_title, content, site_title)
 
 
-def render_about(site_title, author, about_html):
+def render_about(site_title, author, about_html, avatar):
     name = author.get("name", "")
     bio = author.get("bio", "")
     location = author.get("location", "")
     content = f'''
   <main class="container content page">
     <div class="profile-header">
-      <img class="profile-photo small" src="/images/profile.png" alt="{html.escape(name)}">
+      <img class="profile-photo small" src="{avatar}" alt="{html.escape(name)}">
       <div>
         <h1>{html.escape(name)}</h1>
         <p class="lead">{html.escape(bio)}</p>
@@ -196,7 +238,7 @@ def talk_card(item):
 </article>'''
 
 
-def cv_page(site_title, author):
+def cv_page(site_title, author, cv_html):
     name = author.get("name", "")
     bio = author.get("bio", "")
     location = author.get("location", "")
@@ -206,7 +248,7 @@ def cv_page(site_title, author):
     <p><strong>{html.escape(name)}</strong></p>
     <p>{html.escape(bio)}</p>
     <p><strong>Location:</strong> {html.escape(location)}</p>
-    <p>Full CV available upon request.</p>
+    <section class="richtext">{cv_html}</section>
   </main>
 '''
     return page_shell("CV", content, site_title)
@@ -228,20 +270,28 @@ def main():
     config = load_site_config(CONFIG)
     author = config.get("author", {}) or {}
     site_title = config.get("title") or author.get("name") or "Site"
+    avatar = resolve_avatar_path()
 
-    _, about_body = parse_frontmatter(ABOUT)
+    about_src = first_existing(ABOUT_QMD, ABOUT_MD)
+    _, about_body = parse_frontmatter(about_src) if about_src else ({}, "")
+    about_body = remove_about_map_section(strip_liquid(about_body))
     about_html = md_to_html(about_body)
+
+    cv_src = first_existing(CV_QMD)
+    _, cv_body = parse_frontmatter(cv_src) if cv_src else ({}, "")
+    cv_body = strip_liquid(cv_body)
+    cv_html = md_to_html(cv_body)
 
     posts = load_collection(POSTS)
     publications = load_collection(PUBLICATIONS)
     talks = load_collection(TALKS)
 
-    (DOCS / "index.html").write_text(render_home(site_title, author), encoding="utf-8")
-    (DOCS / "about.html").write_text(render_about(site_title, author, about_html), encoding="utf-8")
+    (DOCS / "index.html").write_text(render_home(site_title, author, avatar), encoding="utf-8")
+    (DOCS / "about.html").write_text(render_about(site_title, author, about_html, avatar), encoding="utf-8")
     (DOCS / "posts.html").write_text(render_collection_page(site_title, "Posts", "Writing, commentary, and updates.", posts, post_card), encoding="utf-8")
     (DOCS / "publications.html").write_text(render_collection_page(site_title, "Publications", "Selected publications and research outputs.", publications, publication_card), encoding="utf-8")
     (DOCS / "talks.html").write_text(render_collection_page(site_title, "Talks & Presentations", "Talks, conference appearances, and invited presentations.", talks, talk_card), encoding="utf-8")
-    (DOCS / "cv.html").write_text(cv_page(site_title, author), encoding="utf-8")
+    (DOCS / "cv.html").write_text(cv_page(site_title, author, cv_html), encoding="utf-8")
 
 
 if __name__ == "__main__":

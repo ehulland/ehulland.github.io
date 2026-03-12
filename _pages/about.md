@@ -22,14 +22,3 @@ redirect_from:
 * Extracurricular activities include spending time with my husband, daughter, newborn son, and two dogs exploring our new residence in Utrecht, Netherlands. 
 
 * Full CV available upon request
-
-## Places I've Lived, Studied, and Worked
-
-<p>This map shows cities where I've lived, studied, and worked.</p>
-
-<iframe
-  src="/about_map.html"
-  width="100%"
-  height="500"
-  style="border:none;">
-</iframe>

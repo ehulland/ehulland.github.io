@@ -17,7 +17,7 @@ website:
         href: publications.qmd
       - text: "Talks"
         href: talks.qmd
-      - text: "Talk Map"
+      - text: "Journey Map"
         href: talkmap/map.html
       - text: "Posts"
         href: posts.qmd
