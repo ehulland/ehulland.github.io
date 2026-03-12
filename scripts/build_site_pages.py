@@ -107,9 +107,9 @@ def page_shell(title: str, content: str, site_title: str):
   <nav class="navbar">
     <div class="wrap">
       <a class="brand" href="/">{html.escape(site_title)}</a>
-      <a href="/about.html">About</a>
+      <a href="/about.html">About me</a>
       <a href="/publications.html">Publications</a>
-      <a href="/talks.html">Talks</a>
+      <a href="/talks.html">Talks and presentations</a>
       <a href="/talkmap/map.html">{MAP_LABEL}</a>
       <a href="/posts.html">Posts</a>
       <a href="/cv.html">CV</a>
@@ -155,12 +155,12 @@ def render_home(site_title, author, avatar):
 
   <main class="container content">
     <div class="grid">
-      <div class="card"><h3>About</h3><p>Background, research interests, and profile information.</p><a href="/about.html">Open page</a></div>
-      <div class="card"><h3>Publications</h3><p>Selected papers and research outputs.</p><a href="/publications.html">Browse publications</a></div>
-      <div class="card"><h3>Talks</h3><p>Talks, presentations, and conference appearances.</p><a href="/talks.html">View talks</a></div>
+      <div class="card"><h3>About me</h3><p>Background, research interests, and profile information.</p><a href="/about.html">Open page</a></div>
+      <div class="card"><h3>Publications</h3><p>Selected manuscripts.</p><a href="/publications.html">Browse publications</a></div>
+      <div class="card"><h3>Talks and presentations</h3><p>Talks, presentations, and conference appearances.</p><a href="/talks.html">View talks</a></div>
       <div class="card"><h3>{MAP_LABEL}</h3><p>Explore talks, milestones, and places that have shaped my path.</p><a href="/talkmap/map.html">Open {MAP_LABEL.lower()}</a></div>
-      <div class="card"><h3>Posts</h3><p>Writing, commentary, and updates.</p><a href="/posts.html">Read posts</a></div>
-      <div class="card"><h3>CV</h3><p>Curriculum vitae and professional history.</p><a href="/cv.html">View CV</a></div>
+      <div class="card"><h3>Posts</h3><p>Writing, commentary, and blog posts.</p><a href="/posts.html">Read posts</a></div>
+      <div class="card"><h3>CV</h3><p>Curriculum vitae.</p><a href="/cv.html">View CV</a></div>
     </div>
   </main>
 
@@ -186,7 +186,7 @@ def render_about(site_title, author, about_html, avatar):
     <section class="richtext">{about_html}</section>
   </main>
 '''
-    return page_shell("About", content, site_title)
+    return page_shell("About me", content, site_title)
 
 
 def render_collection_page(site_title, title, intro, items, item_renderer):
