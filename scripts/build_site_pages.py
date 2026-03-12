@@ -77,10 +77,7 @@ def resolve_avatar_path() -> str:
   docs_images = DOCS / "images"
   docs_images.mkdir(parents=True, exist_ok=True)
   candidates = [
-    ROOT / "headshot-color.jpg",
     ROOT / "headshot_color.jpg",
-    ROOT / "images" / "headshot-color.jpg",
-    ROOT / "images" / "headshot_color.jpg",
     ROOT / "images" / "profile.png",
   ]
   src = first_existing(*candidates)
