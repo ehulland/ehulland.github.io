@@ -39,21 +39,17 @@ Skills
 ======
 * Languages
 	* English (Native tongue)
-	* French (Advanced)
+	* French (Expert
 	* Spanish (Low intermediate)
-* Software
-	* R (Advanced)
+	* Dutch (Beginner)
+* Software and packages:
+	* R software(Advanced)
+	  * Tidyverse, data.table, ggplot2, EpiNow2, EpiEstim, EpiSewer, xgboost, Rshiny, glmnet, stan, forecast, surveillance, keras, incidence, projections, raster, sf, terra, rgdal, gdistance, seegSDM
 	* Microsoft Excel, Office, Word, and Powerpoint (Advanced)
-	* SAS and SAS-callable SUDAAN (Advanced)
-	* SEER-Stat (Advanced)
-	* EpiSample (Advanced)
-	* JoinPoint (Intermediate)
-	* ArcGIS (Intermediate)
-	* Open Data Kit (Intermediate)
-	* Python (Low Intermediate)
-	* Stata (Basic)
-	* EpiInfo (Basic)
-	* SPSS (Basic)
+	* SAS and SAS-callable SUDAAN (Intermediate, formerly advanced)
+	* VSCode (Intermediate)
+	* Python (Intermediate)
+	  * •	numpy, matplotlib, transformers, argparse, ollama 
 	* SQL (Basic)
 
 Selected publications
@@ -77,4 +73,4 @@ Professional Organizations
 
 ---
 
-[Download CV (PDF)](files/cv.pdf)
+Contact me for a copy of my full CV
