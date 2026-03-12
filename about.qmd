@@ -26,4 +26,3 @@ title: "About"
 - [X](https://x.com/ehulland/)
 - [LinkedIn](https://www.linkedin.com/in/ehulland/)
 
-[Download my CV](files/cv.pdf)
