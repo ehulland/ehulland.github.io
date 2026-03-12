@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "Ehulland"
+  title: "Erin Hulland Frame"
   site-url: "https://ehulland.github.io/"
   repo-url: "https://github.com/ehulland/ehulland.github.io"
   
@@ -11,13 +11,13 @@ website:
     left:
       - text: "Home"
         href: index.qmd
-      - text: "About"
+      - text: "About Me"
         href: about.qmd
       - text: "Publications"
         href: publications.qmd
-      - text: "Talks"
+      - text: "Talks and Presentations"
         href: talks.qmd
-      - text: "Journey Map"
+      - text: "Timeline Map"
         href: talkmap/map.html
       - text: "Posts"
         href: posts.qmd

@@ -4,11 +4,11 @@ title: "Welcome"
 
 # Welcome
 
-This is an academic website showcasing research, publications, and presentations.
+This is my academic website showcasing research, publications, and presentations.
 
 ## About Me
 
-I'm a researcher working on public health, epidemiology, and data science topics.
+I'm a postdoctoral researcher at ErasmusMC / GGD Rotterdam-Rijnmond and PDPC collaborator working on new methods and data streams for infectious disease surveillance. I am broadly interested in pandemic preparedness, infectious disease epidemiology and surveillance, the role of misinformation and disease transmission, and newer technologies including AI / ML.
 
 - [View my full profile](about.qmd)
 - [Browse my publications](publications.qmd)
