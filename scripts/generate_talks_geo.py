@@ -11,6 +11,17 @@ ROOT = os.path.dirname(os.path.dirname(__file__))
 TALKS_DIR = os.path.join(ROOT, '_talks')
 CACHED_FILE = os.path.join(ROOT, 'talkmap', 'geocache.json')
 ABOUT_MAP_R_FILE = os.path.join(ROOT, 'map_code.R')
+
+# Descriptive venue labels for About locations (keyed by name from map_code.R)
+ABOUT_VENUES = {
+    "London, Canada":           "Hometown: 1989 - 2001",
+    "Pittsburgh, PA, USA":      "Middle and high school years: 2001 - 2007",
+    "University Park, PA, USA": "Undergraduate years: 2007 - 2012",
+    "Paris, France":            "Study abroad: 2010",
+    "Atlanta, GA, USA":         "MPH and early career (CDC) years: 2012 - 2018",
+    "Seattle, WA, USA":         "PhD and remote postdoc years: 2018 - 2024",
+    "Utrecht, Netherlands":     "Current residence and second postdoc: 2024 - present",
+}
 OUT_DIR = os.path.join(ROOT, 'docs', 'talkmap')
 OUT_FILE = os.path.join(OUT_DIR, 'talks.json')
 ALT_OUT_DIR = os.path.join(ROOT, 'talkmap')
@@ -96,17 +107,21 @@ def load_about_locations():
         return []
     content = open(ABOUT_MAP_R_FILE, 'r', encoding='utf-8').read()
     names = parse_r_char_vector(content, 'name')
+    roles = parse_r_char_vector(content, 'role')
     lats = parse_r_num_vector(content, 'lat')
     lngs = parse_r_num_vector(content, 'lng')
     count = min(len(names), len(lats), len(lngs))
     out = []
     for idx in range(count):
+        name = names[idx]
+        role_fallback = roles[idx] if idx < len(roles) else 'About section location'
+        venue = ABOUT_VENUES.get(name, role_fallback)
         out.append({
-            'title': f"About: {names[idx]}",
+            'title': f"About: {name}",
             'date': None,
-            'location': names[idx],
-            'venue': 'About section location',
-            'permalink': '/about/',
+            'location': name,
+            'venue': venue,
+            'permalink': None,
             'lat': lats[idx],
             'lon': lngs[idx],
             'type': 'about'
