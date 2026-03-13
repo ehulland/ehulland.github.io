@@ -86,7 +86,7 @@ author:
   location         : &location "Utrecht, Netherlands"
   employer         : 
   pubmed           : 
-  googlescholar    : &scholar "http://scholar.google.com/citations?user=CA3Z5zcAAAAJ&hl=en&oi=ao"
+  googlescholar    : &scholar "https://scholar.google.com/citations?user=CA3Z5zcAAAAJ&hl=en"
   email            :
   researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
   uri              :

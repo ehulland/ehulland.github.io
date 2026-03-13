@@ -152,6 +152,29 @@ p { margin-top: 0; }
 .hero a { color: #9ecfef; }
 .hero a:hover { color: #ffffff; }
 
+/* Social icon row */
+.social-icons {
+  display: flex;
+  gap: .75rem;
+  align-items: center;
+  margin: .5rem 0 .75rem;
+}
+.social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,.85);
+  transition: color .15s, transform .15s, opacity .15s;
+  text-decoration: none !important;
+}
+.social-icon:hover {
+  color: #ffffff;
+  transform: translateY(-2px);
+  text-decoration: none !important;
+}
+[data-theme="dark"] .social-icon { color: rgba(50,251,226,.8); }
+[data-theme="dark"] .social-icon:hover { color: #32fbe2; }
+
 /* ============================================================
    Profile photo
    ============================================================ */
