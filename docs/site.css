@@ -270,8 +270,8 @@ p { margin-top: 0; }
 
 .metric-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: .9rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .7rem;
   margin: .85rem 0 1.4rem;
 }
 
@@ -279,12 +279,12 @@ p { margin-top: 0; }
   background: var(--color-primary);
   color: #ffffff;
   border-radius: 20px;
-  padding: .8rem .95rem;
+  padding: .55rem .75rem;
 }
 
 .metric-card h3 {
   margin: 0;
-  font-size: .85rem;
+  font-size: .8rem;
   font-weight: 700;
   opacity: .95;
 }
@@ -292,9 +292,15 @@ p { margin-top: 0; }
 .metric-value {
   margin: .2rem 0 0;
   color: #ffffff !important;
-  font-size: 1.45rem !important;
+  font-size: 1.2rem !important;
   font-weight: 700;
   line-height: 1.1;
+}
+
+@media (max-width: 760px) {
+  .metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .profile-header {

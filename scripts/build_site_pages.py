@@ -296,16 +296,35 @@ def fetch_scholar_metrics(scholar_url: str):
     }
 
 
-def cv_page(site_title, author, cv_html, publications, talks, posts):
+def cv_section_list(items, tab_path, tab_label):
+    if not items:
+        return ""
+    rows = []
+    for item in items:
+        title = html.escape(item.get("title", "Untitled"))
+        rows.append(
+            f'<li>{title} — <a href="{tab_path}">See in {tab_label} tab</a></li>'
+        )
+    return "<ul>" + "".join(rows) + "</ul>"
+
+
+def cv_page(site_title, author, cv_html, publications, talks):
     name = author.get("name", "")
     bio = author.get("bio", "")
     location = author.get("location", "")
     scholar_url = author.get("googlescholar", "")
     scholar = fetch_scholar_metrics(scholar_url)
 
-    publications_html = "\n".join(publication_card(item) for item in publications)
-    talks_html = "\n".join(talk_card(item) for item in talks)
-    posts_html = "\n".join(post_card(item) for item in posts)
+    publications_html = cv_section_list(publications, "/publications.html", "Publications")
+    talks_html = cv_section_list(talks, "/talks.html", "Talks")
+    cv_html = cv_html.replace(
+        "<p>See the Publications page for a current list of selected publications.</p>",
+        publications_html,
+    )
+    cv_html = cv_html.replace(
+        "<p>See the Talks page for a current list of conference presentations and invited talks.</p>",
+        talks_html,
+    )
 
     content = f'''
   <main class="container content page">
@@ -332,18 +351,6 @@ def cv_page(site_title, author, cv_html, publications, talks, posts):
     <p>{html.escape(bio)}</p>
     <p><strong>Location:</strong> {html.escape(location)}</p>
     <section class="richtext">{cv_html}</section>
-    <section>
-      <h2>Publications</h2>
-      <div class="listing">{publications_html}</div>
-    </section>
-    <section>
-      <h2>Talks & Presentations</h2>
-      <div class="listing">{talks_html}</div>
-    </section>
-    <section>
-      <h2>Posts</h2>
-      <div class="listing">{posts_html}</div>
-    </section>
   </main>
 '''
     return page_shell("CV", content, site_title)
@@ -395,7 +402,7 @@ def main():
     (DOCS / "posts.html").write_text(render_collection_page(site_title, "Posts", "Writing, commentary, and updates.", posts, post_card), encoding="utf-8")
     (DOCS / "publications.html").write_text(render_collection_page(site_title, "Publications", "Selected publications and research outputs.", publications, publication_card), encoding="utf-8")
     (DOCS / "talks.html").write_text(render_collection_page(site_title, "Talks & Presentations", "Talks, conference appearances, and invited presentations.", talks, talk_card), encoding="utf-8")
-    (DOCS / "cv.html").write_text(cv_page(site_title, author, cv_html, publications, talks, posts), encoding="utf-8")
+    (DOCS / "cv.html").write_text(cv_page(site_title, author, cv_html, publications, talks), encoding="utf-8")
 
 
 if __name__ == "__main__":
