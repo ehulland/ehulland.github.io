@@ -5,6 +5,7 @@ import re
 from pathlib import Path
 
 import markdown
+import requests
 import yaml
 
 
@@ -257,17 +258,92 @@ def talk_card(item):
 </article>'''
 
 
-def cv_page(site_title, author, cv_html):
+def fetch_scholar_metrics(scholar_url: str):
+    default = {
+        "citations": "N/A",
+        "h_index": "N/A",
+        "i10_index": "N/A",
+    }
+    if not scholar_url:
+        return default
+
+    try:
+        response = requests.get(
+            scholar_url,
+            timeout=15,
+            headers={"User-Agent": "Mozilla/5.0"},
+        )
+        response.raise_for_status()
+    except Exception:
+        return default
+
+    rows = re.findall(r"<tr[^>]*>(.*?)</tr>", response.text, flags=re.S | re.I)
+    values = {}
+    for row in rows:
+        m_name = re.search(r'<td[^>]*class="gsc_rsb_sc1"[^>]*>(.*?)</td>', row, flags=re.S | re.I)
+        m_value = re.search(r'<td[^>]*class="gsc_rsb_std"[^>]*>(.*?)</td>', row, flags=re.S | re.I)
+        if not (m_name and m_value):
+            continue
+        name = re.sub(r"<.*?>", "", m_name.group(1)).strip().lower()
+        value = re.sub(r"<.*?>", "", m_value.group(1)).strip()
+        value = html.unescape(value)
+        values[name] = value
+
+    return {
+        "citations": values.get("citations", default["citations"]),
+        "h_index": values.get("h-index", default["h_index"]),
+        "i10_index": values.get("i10-index", default["i10_index"]),
+    }
+
+
+def cv_page(site_title, author, cv_html, publications, talks, posts):
     name = author.get("name", "")
     bio = author.get("bio", "")
     location = author.get("location", "")
+    scholar_url = author.get("googlescholar", "")
+    scholar = fetch_scholar_metrics(scholar_url)
+
+    publications_html = "\n".join(publication_card(item) for item in publications)
+    talks_html = "\n".join(talk_card(item) for item in talks)
+    posts_html = "\n".join(post_card(item) for item in posts)
+
     content = f'''
   <main class="container content page">
     <h1>Curriculum Vitae</h1>
+    <section class="metric-grid">
+      <article class="metric-card">
+        <h3>Publications</h3>
+        <p class="metric-value">{len(publications)}</p>
+      </article>
+      <article class="metric-card">
+        <h3>Citations</h3>
+        <p class="metric-value">{html.escape(str(scholar.get("citations", "N/A")))}</p>
+      </article>
+      <article class="metric-card">
+        <h3>h-index</h3>
+        <p class="metric-value">{html.escape(str(scholar.get("h_index", "N/A")))}</p>
+      </article>
+      <article class="metric-card">
+        <h3>i10-index</h3>
+        <p class="metric-value">{html.escape(str(scholar.get("i10_index", "N/A")))}</p>
+      </article>
+    </section>
     <p><strong>{html.escape(name)}</strong></p>
     <p>{html.escape(bio)}</p>
     <p><strong>Location:</strong> {html.escape(location)}</p>
     <section class="richtext">{cv_html}</section>
+    <section>
+      <h2>Publications</h2>
+      <div class="listing">{publications_html}</div>
+    </section>
+    <section>
+      <h2>Talks & Presentations</h2>
+      <div class="listing">{talks_html}</div>
+    </section>
+    <section>
+      <h2>Posts</h2>
+      <div class="listing">{posts_html}</div>
+    </section>
   </main>
 '''
     return page_shell("CV", content, site_title)
@@ -319,7 +395,7 @@ def main():
     (DOCS / "posts.html").write_text(render_collection_page(site_title, "Posts", "Writing, commentary, and updates.", posts, post_card), encoding="utf-8")
     (DOCS / "publications.html").write_text(render_collection_page(site_title, "Publications", "Selected publications and research outputs.", publications, publication_card), encoding="utf-8")
     (DOCS / "talks.html").write_text(render_collection_page(site_title, "Talks & Presentations", "Talks, conference appearances, and invited presentations.", talks, talk_card), encoding="utf-8")
-    (DOCS / "cv.html").write_text(cv_page(site_title, author, cv_html), encoding="utf-8")
+    (DOCS / "cv.html").write_text(cv_page(site_title, author, cv_html, publications, talks, posts), encoding="utf-8")
 
 
 if __name__ == "__main__":

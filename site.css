@@ -268,6 +268,35 @@ p { margin-top: 0; }
    ============================================================ */
 .page { max-width: 820px; }
 
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: .9rem;
+  margin: .85rem 0 1.4rem;
+}
+
+.metric-card {
+  background: var(--color-primary);
+  color: #ffffff;
+  border-radius: 20px;
+  padding: .8rem .95rem;
+}
+
+.metric-card h3 {
+  margin: 0;
+  font-size: .85rem;
+  font-weight: 700;
+  opacity: .95;
+}
+
+.metric-value {
+  margin: .2rem 0 0;
+  color: #ffffff !important;
+  font-size: 1.45rem !important;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
 .profile-header {
   display: flex;
   align-items: center;
