@@ -155,7 +155,7 @@ p { margin-top: 0; }
 /* Social icon row */
 .social-icons {
   display: flex;
-  gap: .75rem;
+  gap: 1.25rem;
   align-items: center;
   margin: .5rem 0 .75rem;
 }
