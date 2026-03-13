@@ -1,68 +1,5 @@
 [
   {
-    "objectID": "posts.html",
-    "href": "posts.html",
-    "title": "Blog & Posts",
-    "section": "",
-    "text": "Blog Posts\nRecent posts and commentaries.\n[Blog posts listing coming soon…]"
-  },
-  {
-    "objectID": "cv.html",
-    "href": "cv.html",
-    "title": "Curriculum Vitae",
-    "section": "",
-    "text": "Add education here.\n\n\n\nAdd experience here.\n\nDownload CV (PDF)"
-  },
-  {
-    "objectID": "cv.html#education",
-    "href": "cv.html#education",
-    "title": "Curriculum Vitae",
-    "section": "",
-    "text": "Add education here."
-  },
-  {
-    "objectID": "cv.html#experience",
-    "href": "cv.html#experience",
-    "title": "Curriculum Vitae",
-    "section": "",
-    "text": "Add experience here.\n\nDownload CV (PDF)"
-  },
-  {
-    "objectID": "CONTRIBUTING.html",
-    "href": "CONTRIBUTING.html",
-    "title": "Ehulland",
-    "section": "",
-    "text": "Contributions are welcome! Please add issues and make pull requests. There are no stupid questions. All ideas are welcome. This is a volunteer project. Be excellent to each other.\nFork from master and go from there. This repository is intended to remain a generic, ready-to-fork template that demonstrates the features of academicpages.\nIf you make a pull request and change code, please make sure there is a closed issue tagged with ‘code change’ that has some comment linking to either the single commit (if the change was just one commit) or a diff comparing before/after the change (see issue 21 for example). This is so that those who have forked this repo and modified it for their purposes can more easily patch bugs and new features."
-  },
-  {
-    "objectID": "markdown_generator/PubsFromBib.html",
-    "href": "markdown_generator/PubsFromBib.html",
-    "title": "Publications markdown generator for academicpages",
-    "section": "",
-    "text": "Takes a set of bibtex of publications and converts them for use with academicpages.github.io. This is an interactive Jupyter notebook (see more info here).\nThe core python code is also in pubsFromBibs.py. Run either from the markdown_generator folder after replacing updating the publist dictionary with: * bib file names * specific venue keys based on your bib file preferences * any specific pre-text for specific files * Collection Name (future feature)\nTODO: Make this work with other databases of citations, TODO: Merge this with the existing TSV parsing solution\n\nfrom pybtex.database.input import bibtex\nimport pybtex.database.input.bibtex \nfrom time import strptime\nimport string\nimport html\nimport os\nimport re\n\n\n#todo: incorporate different collection types rather than a catch all publications, requires other changes to template\npublist = {\n    \"proceeding\": {\n        \"file\" : \"proceedings.bib\",\n        \"venuekey\": \"booktitle\",\n        \"venue-pretext\": \"In the proceedings of \",\n        \"collection\" : {\"name\":\"publications\",\n                        \"permalink\":\"/publication/\"}\n        \n    },\n    \"journal\":{\n        \"file\": \"pubs.bib\",\n        \"venuekey\" : \"journal\",\n        \"venue-pretext\" : \"\",\n        \"collection\" : {\"name\":\"publications\",\n                        \"permalink\":\"/publication/\"}\n    } \n}\n\n\nhtml_escape_table = {\n    \"&\": \"&amp;\",\n    '\"': \"&quot;\",\n    \"'\": \"&apos;\"\n    }\n\ndef html_escape(text):\n    \"\"\"Produce entities within text.\"\"\"\n    return \"\".join(html_escape_table.get(c,c) for c in text)\n\n\nfor pubsource in publist:\n    parser = bibtex.Parser()\n    bibdata = parser.parse_file(publist[pubsource][\"file\"])\n\n    #loop through the individual references in a given bibtex file\n    for bib_id in bibdata.entries:\n        #reset default date\n        pub_year = \"1900\"\n        pub_month = \"01\"\n        pub_day = \"01\"\n        \n        b = bibdata.entries[bib_id].fields\n        \n        try:\n            pub_year = f'{b[\"year\"]}'\n\n            #todo: this hack for month and day needs some cleanup\n            if \"month\" in b.keys(): \n                if(len(b[\"month\"])&lt;3):\n                    pub_month = \"0\"+b[\"month\"]\n                    pub_month = pub_month[-2:]\n                elif(b[\"month\"] not in range(12)):\n                    tmnth = strptime(b[\"month\"][:3],'%b').tm_mon   \n                    pub_month = \"{:02d}\".format(tmnth) \n                else:\n                    pub_month = str(b[\"month\"])\n            if \"day\" in b.keys(): \n                pub_day = str(b[\"day\"])\n\n                \n            pub_date = pub_year+\"-\"+pub_month+\"-\"+pub_day\n            \n            #strip out {} as needed (some bibtex entries that maintain formatting)\n            clean_title = b[\"title\"].replace(\"{\", \"\").replace(\"}\",\"\").replace(\"\\\\\",\"\").replace(\" \",\"-\")    \n\n            url_slug = re.sub(\"\\\\[.*\\\\]|[^a-zA-Z0-9_-]\", \"\", clean_title)\n            url_slug = url_slug.replace(\"--\",\"-\")\n\n            md_filename = (str(pub_date) + \"-\" + url_slug + \".md\").replace(\"--\",\"-\")\n            html_filename = (str(pub_date) + \"-\" + url_slug).replace(\"--\",\"-\")\n\n            #Build Citation from text\n            citation = \"\"\n\n            #citation authors - todo - add highlighting for primary author?\n            for author in bibdata.entries[bib_id].persons[\"author\"]:\n                citation = citation+\" \"+author.first_names[0]+\" \"+author.last_names[0]+\", \"\n\n            #citation title\n            citation = citation + \"\\\"\" + html_escape(b[\"title\"].replace(\"{\", \"\").replace(\"}\",\"\").replace(\"\\\\\",\"\")) + \".\\\"\"\n\n            #add venue logic depending on citation type\n            venue = publist[pubsource][\"venue-pretext\"]+b[publist[pubsource][\"venuekey\"]].replace(\"{\", \"\").replace(\"}\",\"\").replace(\"\\\\\",\"\")\n\n            citation = citation + \" \" + html_escape(venue)\n            citation = citation + \", \" + pub_year + \".\"\n\n            \n            ## YAML variables\n            md = \"---\\ntitle: \\\"\"   + html_escape(b[\"title\"].replace(\"{\", \"\").replace(\"}\",\"\").replace(\"\\\\\",\"\")) + '\"\\n'\n            \n            md += \"\"\"collection: \"\"\" +  publist[pubsource][\"collection\"][\"name\"]\n\n            md += \"\"\"\\npermalink: \"\"\" + publist[pubsource][\"collection\"][\"permalink\"]  + html_filename\n            \n            note = False\n            if \"note\" in b.keys():\n                if len(str(b[\"note\"])) &gt; 5:\n                    md += \"\\nexcerpt: '\" + html_escape(b[\"note\"]) + \"'\"\n                    note = True\n\n            md += \"\\ndate: \" + str(pub_date) \n\n            md += \"\\nvenue: '\" + html_escape(venue) + \"'\"\n            \n            url = False\n            if \"url\" in b.keys():\n                if len(str(b[\"url\"])) &gt; 5:\n                    md += \"\\npaperurl: '\" + b[\"url\"] + \"'\"\n                    url = True\n\n            md += \"\\ncitation: '\" + html_escape(citation) + \"'\"\n\n            md += \"\\n---\"\n\n            \n            ## Markdown description for individual page\n            if note:\n                md += \"\\n\" + html_escape(b[\"note\"]) + \"\\n\"\n\n            if url:\n                md += \"\\n[Access paper here](\" + b[\"url\"] + \"){:target=\\\"_blank\\\"}\\n\" \n            else:\n                md += \"\\nUse [Google Scholar](https://scholar.google.com/scholar?q=\"+html.escape(clean_title.replace(\"-\",\"+\"))+\"){:target=\\\"_blank\\\"} for full citation\"\n\n            md_filename = os.path.basename(md_filename)\n\n            with open(\"../_publications/\" + md_filename, 'w') as f:\n                f.write(md)\n            print(f'SUCESSFULLY PARSED {bib_id}: \\\"', b[\"title\"][:60],\"...\"*(len(b['title'])&gt;60),\"\\\"\")\n        # field may not exist for a reference\n        except KeyError as e:\n            print(f'WARNING Missing Expected Field {e} from entry {bib_id}: \\\"', b[\"title\"][:30],\"...\"*(len(b['title'])&gt;30),\"\\\"\")\n            continue"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Welcome",
-    "section": "",
-    "text": "This is an academic website showcasing research, publications, and presentations.\n\n\nI’m a researcher working on public health, epidemiology, and data science topics.\n\nView my full profile\nBrowse my publications\nWhere I’ve presented"
-  },
-  {
-    "objectID": "index.html#about-me",
-    "href": "index.html#about-me",
-    "title": "Welcome",
-    "section": "",
-    "text": "I’m a researcher working on public health, epidemiology, and data science topics.\n\nView my full profile\nBrowse my publications\nWhere I’ve presented"
-  },
-  {
-    "objectID": "markdown_generator/readme.html",
-    "href": "markdown_generator/readme.html",
-    "title": "Jupyter notebook markdown generator",
-    "section": "",
-    "text": "Jupyter notebook markdown generator\nThese .ipynb files are Jupyter notebook files that convert a TSV containing structured data about talks (talks.tsv) or presentations (presentations.tsv) into individual markdown files that will be properly formatted for the academicpages template. The notebooks contain a lot of documentation about the process. The .py files are pure python that do the same things if they are executed in a terminal, they just don’t have pretty documentation."
-  },
-  {
     "objectID": "talks.html",
     "href": "talks.html",
     "title": "Talks & Presentations",
@@ -84,31 +21,59 @@
     "text": "Explore the map for details on all my talks and presentations."
   },
   {
-    "objectID": "publications.html",
-    "href": "publications.html",
-    "title": "Publications",
+    "objectID": "posts.html",
+    "href": "posts.html",
+    "title": "Blog & Posts",
     "section": "",
-    "text": "Publications\nView my academic publications and research work below.\n[Detailed publications list coming soon…]\nFor more information, see the _publications folder."
+    "text": "Blog Posts\nRecent posts and commentaries.\n[Blog posts listing coming soon…]"
+  },
+  {
+    "objectID": "cv.html",
+    "href": "cv.html",
+    "title": "Curriculum Vitae",
+    "section": "",
+    "text": "Education\n\nB.S. in Biology and French, Statistics Minor, Pennsylvania State University, 2012\nMPH in Biostatistics, Emory University Rollins School of Public Health, 2014\nPhD in Global Health - Metrics Track, University of Washington, 2023\n\n\n\nRelevant work experience\n\n10/2025 - present\n\nDepartment of Viroscience, Erasmus MC, Rotterdam, Netherlands\n\nPostdoctoral Researcher: 10/2025 - present\n\n\n10/2023 - 10/2025\n\nComputational Health Informatics Program, Boston Children’s Hospital & Harvard Medical School, Boston, MA\n\nPostdoctoral Research Consultant, Majumder Lab: 10/2023-10/2025\n\n\n09/2018 - 09/2023\n\nInstitute for Health Metrics and Evaluation, Seattle WA\n\nResearcher, Pandemics Team: 01/2023 - present\nResearcher, COVID-19 Pandemics Team: 09/2020 - 12/2022\nPre-doctoral researcher, Local Burden of Disease Pandemics Team: 09/2018 - 09/2020\n\n\n06/2020 - 09/2020\n\nBill and Melinda Gates Foundation, Seattle WA\n\nSummer Associate, Global Development Division, Polio Eradication Team\n\n\n06/2014 - 07/2018\n\nU.S. Centers for Disease Control and Prevention, Atlanta GA\n\nBiostatistician - Center for Global Health, Emergency Response and Recovery Branch: 04/2016 - 07/2018\nJunior Biostatistician (ORISE Fellow) - Center for Global Health, Emergency Response and Recovery Branch: 06/2014 - 04/2016\n\n\n11/2013 - 05/2014\n\nAmerican Cancer Society, Atlanta GA\n\nIntern - Surveillance and Healthy Services Research Team\n\n\n\n\n\nSkills\n\nLanguages\n\nEnglish (Native tongue)\nFrench (Expert\nSpanish (Low intermediate)\nDutch (Beginner)\n\nSoftware and packages:\n\nR software(Advanced)\n\nTidyverse, data.table, ggplot2, EpiNow2, EpiEstim, EpiSewer, xgboost, Rshiny, glmnet, stan, forecast, surveillance, keras, incidence, projections, raster, sf, terra, rgdal, gdistance, seegSDM\n\nMicrosoft Excel, Office, Word, and Powerpoint (Advanced)\nSAS and SAS-callable SUDAAN (Intermediate, formerly advanced)\nVSCode (Intermediate)\nPython (Intermediate)\n\nnumpy, matplotlib, transformers, argparse, ollama\n\nSQL (Basic)\n\n\n\n\nSelected publications\nSee the Publications page for a current list of selected publications.\n\n\nConferences and talks\nSee the Talks page for a current list of conference presentations and invited talks.\n\n\nProfessional Organizations\n\n2014 - 2015\n\nSociety of Behavioral Medicine (Member)\n\n2015 - 2017\n\nAmerican Statistical Association (Member)\n\n2018 - 2024\n\nAmerican Society for Tropical Medicine and Hygiene (Member)\n\n2023-2025\n\nSociety for Epidemiologic Research (Member)\n\n\n\nContact me for a copy of my full CV"
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "Add your educational background and professional experience here.\n\n\n\n\nEmail: contact@example.com\nGitHub\n\nDownload my CV"
+    "text": "Currently working as postdoc in the Department of Viroscience at Erasmus MC, GGD Rotterdam-Rijnmond, and the Pandemic and Disaster Preparedness Center working on the Frontrunner 5 Project: Integrated early-warning surveillance methods and tools.\nPreviously worked as a postdoctoral research consultant in the Majumder Lab at Boston Children’s Hospital and Harvard Medical School, focusing on the role of trust (and mistrust) in society and on pandemic preparedness and response.\nPhD graduate in Global Health - Metrics Track from the University of Washington, advised by Dr. David Pigott focusing on pandemic preparedness and the response to COVID-19.\nExperience in international health, pandemic preparedness, and outbreak response with a strong interest in data science, statistics, and geospatial analyses.\nResearch goals include improving pandemic preparedness modeling and response for diseases of epidemic potential. Experience in geospatial analysis, forecasting, survey design and analysis, and hierarchical modeling. Proficient in R, SAS, Git processes, some experience in Python.\nRelevant coursework includes: Time series analysis, Maximum likelihood estimation Hierarchical modeling, Geospatial analysis.\nExtracurricular activities include spending time with my husband, two young kids, and our dog exploring our new residence in Utrecht, Netherlands.\nFull CV available upon request"
   },
   {
-    "objectID": "about.html#background",
-    "href": "about.html#background",
+    "objectID": "about.html#about-me",
+    "href": "about.html#about-me",
     "title": "About",
     "section": "",
-    "text": "Add your educational background and professional experience here."
+    "text": "Currently working as postdoc in the Department of Viroscience at Erasmus MC, GGD Rotterdam-Rijnmond, and the Pandemic and Disaster Preparedness Center working on the Frontrunner 5 Project: Integrated early-warning surveillance methods and tools.\nPreviously worked as a postdoctoral research consultant in the Majumder Lab at Boston Children’s Hospital and Harvard Medical School, focusing on the role of trust (and mistrust) in society and on pandemic preparedness and response.\nPhD graduate in Global Health - Metrics Track from the University of Washington, advised by Dr. David Pigott focusing on pandemic preparedness and the response to COVID-19.\nExperience in international health, pandemic preparedness, and outbreak response with a strong interest in data science, statistics, and geospatial analyses.\nResearch goals include improving pandemic preparedness modeling and response for diseases of epidemic potential. Experience in geospatial analysis, forecasting, survey design and analysis, and hierarchical modeling. Proficient in R, SAS, Git processes, some experience in Python.\nRelevant coursework includes: Time series analysis, Maximum likelihood estimation Hierarchical modeling, Geospatial analysis.\nExtracurricular activities include spending time with my husband, two young kids, and our dog exploring our new residence in Utrecht, Netherlands.\nFull CV available upon request"
   },
   {
     "objectID": "about.html#contact",
     "href": "about.html#contact",
     "title": "About",
+    "section": "Contact",
+    "text": "Contact\n\nEmail\nGitHub\nX\nLinkedIn"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome",
     "section": "",
-    "text": "Email: contact@example.com\nGitHub\n\nDownload my CV"
+    "text": "This is my academic website showcasing research, publications, and presentations.\n\n\nI’m a postdoctoral researcher at ErasmusMC / GGD Rotterdam-Rijnmond and PDPC collaborator working on new methods and data streams for infectious disease surveillance. I am broadly interested in pandemic preparedness, infectious disease epidemiology and surveillance, the role of misinformation and disease transmission, and newer technologies including AI / ML.\n\nView my full profile\nBrowse my publications\nWhere I’ve presented"
+  },
+  {
+    "objectID": "index.html#about-me",
+    "href": "index.html#about-me",
+    "title": "Welcome",
+    "section": "",
+    "text": "I’m a postdoctoral researcher at ErasmusMC / GGD Rotterdam-Rijnmond and PDPC collaborator working on new methods and data streams for infectious disease surveillance. I am broadly interested in pandemic preparedness, infectious disease epidemiology and surveillance, the role of misinformation and disease transmission, and newer technologies including AI / ML.\n\nView my full profile\nBrowse my publications\nWhere I’ve presented"
+  },
+  {
+    "objectID": "publications.html",
+    "href": "publications.html",
+    "title": "Publications",
+    "section": "",
+    "text": "Publications\nView my academic publications and research work below.\n[Detailed publications list coming soon…]\nFor more information, see the _publications folder."
   }
 ]

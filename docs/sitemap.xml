@@ -1,39 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://ehulland.github.io/talks.html</loc>
+    <lastmod>2026-03-11T14:29:01.585Z</lastmod>
+  </url>
+  <url>
     <loc>https://ehulland.github.io/posts.html</loc>
-    <lastmod>2026-03-11T14:34:20.134Z</lastmod>
+    <lastmod>2026-03-11T14:29:04.213Z</lastmod>
   </url>
   <url>
     <loc>https://ehulland.github.io/cv.html</loc>
-    <lastmod>2026-03-11T14:34:20.131Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ehulland.github.io/CONTRIBUTING.html</loc>
-    <lastmod>2026-03-11T14:34:20.106Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ehulland.github.io/markdown_generator/PubsFromBib.html</loc>
-    <lastmod>2026-03-11T14:34:20.134Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ehulland.github.io/index.html</loc>
-    <lastmod>2026-03-11T14:34:20.133Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ehulland.github.io/markdown_generator/readme.html</loc>
-    <lastmod>2026-03-11T14:34:20.134Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ehulland.github.io/talks.html</loc>
-    <lastmod>2026-03-11T14:34:20.135Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ehulland.github.io/publications.html</loc>
-    <lastmod>2026-03-11T14:34:20.134Z</lastmod>
+    <lastmod>2026-03-12T08:45:13.452Z</lastmod>
   </url>
   <url>
     <loc>https://ehulland.github.io/about.html</loc>
-    <lastmod>2026-03-11T14:34:20.113Z</lastmod>
+    <lastmod>2026-03-12T09:14:54.936Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ehulland.github.io/index.html</loc>
+    <lastmod>2026-03-12T08:31:35.775Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ehulland.github.io/publications.html</loc>
+    <lastmod>2026-03-11T14:29:01.585Z</lastmod>
   </url>
 </urlset>
