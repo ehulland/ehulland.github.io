@@ -1,0 +1,126 @@
+[
+  {
+    "title": "The Association between stress, coping, and sexual risk behaviors over 24 months among African-American female adolescents",
+    "date": "2014-04-26",
+    "location": "Philadelphia, Pennsylvania",
+    "venue": "Society of Behavioral Medicine 35th Annual Meeting",
+    "permalink": "/talks/2014-04-26-Society-of-Behavioral-Medicine-35",
+    "lat": 39.9527237,
+    "lon": -75.1635262
+  },
+  {
+    "title": "Parameters associated with design effect of child anthropometry indicators in small-scale field surveys",
+    "date": "2016-07-28",
+    "location": "Chicago, Illinois",
+    "venue": "2nd International Conference on Survey Methods in Multinational, Multiregional, and Multicultural Contexts.",
+    "permalink": "/talks/2016-07-28-Survey-Methods-3MC",
+    "lat": 41.8755616,
+    "lon": -87.6244212
+  },
+  {
+    "title": "Precision Public Health and Pandemic Preparedness: Quantifying travel time to health care from locations at risk for pathogen transmission",
+    "date": "2019-11-21",
+    "location": "National Harbor, MD",
+    "venue": "American Society for Tropical Medicine and Hygiene Annual Meetings",
+    "permalink": "/talks/2019-11-21-ASTMH",
+    "lat": 38.783342,
+    "lon": -77.0148285
+  },
+  {
+    "title": "Pandemic preparedness and COVID-19: an exploratory analysis of infection and fatality rates, and contextual factors associated with preparedness in 177 countries, from Jan 1, 2020, to Sept 30, 2021",
+    "date": "2021-11-17",
+    "location": "Seattle, WA and Virtual",
+    "venue": "IHME Independent Advisory Committe Autumn Meeting",
+    "permalink": "/talks/2021-11-17-IAC",
+    "lat": 47.6038321,
+    "lon": -122.330062
+  },
+  {
+    "title": "Estimating time-varying cholera transmission and oral cholera vaccine effectiveness in Haiti and Cameroon, 2021-2023",
+    "date": "2024-06-19",
+    "location": "Austin, TX",
+    "venue": "2024 Society for Epidemiologic Research Annual Meeting",
+    "permalink": "/talks/2024-06-19-SER",
+    "lat": 30.2711286,
+    "lon": -97.7436995
+  },
+  {
+    "title": "Estimating time-varying cholera transmission and oral cholera vaccine effectiveness in Haiti and Cameroon, 2021-2023",
+    "date": "2024-08-26",
+    "location": "Barcelona, Spain",
+    "venue": "2024 epiDamik @ KDD meeting",
+    "permalink": "/talks/2024-08-26-KDD",
+    "lat": 41.3825802,
+    "lon": 2.177073
+  },
+  {
+    "title": "About: London, Canada",
+    "date": null,
+    "location": "London, Canada",
+    "venue": "Hometown: 1989 - 2001",
+    "permalink": null,
+    "lat": 42.9849,
+    "lon": -81.2453,
+    "type": "about"
+  },
+  {
+    "title": "About: Pittsburgh, PA, USA",
+    "date": null,
+    "location": "Pittsburgh, PA, USA",
+    "venue": "Middle and high school years: 2001 - 2007",
+    "permalink": null,
+    "lat": 40.4406,
+    "lon": -79.9959,
+    "type": "about"
+  },
+  {
+    "title": "About: University Park, PA, USA",
+    "date": null,
+    "location": "University Park, PA, USA",
+    "venue": "Undergraduate years: 2007 - 2012",
+    "permalink": null,
+    "lat": 40.7982,
+    "lon": -77.8599,
+    "type": "about"
+  },
+  {
+    "title": "About: Paris, France",
+    "date": null,
+    "location": "Paris, France",
+    "venue": "Study abroad: 2010",
+    "permalink": null,
+    "lat": 48.858387,
+    "lon": 2.0180743,
+    "type": "about"
+  },
+  {
+    "title": "About: Atlanta, GA, USA",
+    "date": null,
+    "location": "Atlanta, GA, USA",
+    "venue": "MPH and early career (CDC) years: 2012 - 2018",
+    "permalink": null,
+    "lat": 33.749,
+    "lon": -84.388,
+    "type": "about"
+  },
+  {
+    "title": "About: Seattle, WA, USA",
+    "date": null,
+    "location": "Seattle, WA, USA",
+    "venue": "PhD and remote postdoc years: 2018 - 2024",
+    "permalink": null,
+    "lat": 47.6062,
+    "lon": -122.3321,
+    "type": "about"
+  },
+  {
+    "title": "About: Utrecht, Netherlands",
+    "date": null,
+    "location": "Utrecht, Netherlands",
+    "venue": "Current residence and second postdoc: 2024 - present",
+    "permalink": null,
+    "lat": 52.0907,
+    "lon": 5.1214,
+    "type": "about"
+  }
+]
