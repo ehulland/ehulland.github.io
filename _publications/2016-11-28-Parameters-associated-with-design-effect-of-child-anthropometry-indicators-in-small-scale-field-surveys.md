@@ -7,6 +7,9 @@ date: 2016-11-28
 venue: 'Emerging Themes in Epidemiology'
 paperurl: 'https://ete-online.biomedcentral.com/articles/10.1186/s12982-016-0054-y#citeas'
 citation: 'Hulland, E.N., Blanton, C.J., Leidman, E.Z. et al. Parameters associated with design effect of child anthropometry indicators in small-scale field surveys. Emerg Themes Epidemiol 13, 13 (2016). https://doi.org/10.1186/s12982-016-0054-y'
+map_location: 'Sub-Saharan Africa'
+lat: 0.0
+lon: 20.0
 ---
 Background
 Cluster surveys provide rapid but representative estimates of key nutrition indicators in humanitarian crises. For these surveys, an accurate estimate of the design effect is critical to calculate a sample size that achieves adequate precision with the minimum number of sampling units. This paper describes the variability in design effect for three key nutrition indicators measured in small-scale surveys and models the association of design effect with parameters hypothesized to explain this variability.

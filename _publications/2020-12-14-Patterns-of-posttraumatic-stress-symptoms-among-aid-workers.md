@@ -7,6 +7,9 @@ date: 2020-12-14
 venue: 'Traumatology'
 paperurl: 'https://doi.org/10.1037/trm0000286'
 citation: 'Greene-Cramer, B. J., Hulland, E. N., Russell, S. P., Eriksson, C. B., & Lopes-Cardozo, B. (2021). Patterns of posttraumatic stress symptoms among international humanitarian aid workers. Traumatology, 27(2), 177'
+map_location: 'Atlanta, GA, USA'
+lat: 33.749
+lon: -84.388
 ---
 Repeated outbreaks of emerging pathogens underscore the need for preparedness plans to prevent, detect, and respond. As countries develop and improve National Action Plans for Health Security, addressing subnational variation in preparedness is increasingly important. One facet of preparedness and mitigating disease transmission is health facility accessibility, linking infected persons with health systems and vice versa. Where potential patients can access care, local facilities must ensure they can appropriately diagnose, treat, and contain disease spread to prevent secondary transmission; where patients cannot readily access facilities, alternate plans must be developed. Here, we use travel time to link facilities and populations at risk of viral hemorrhagic fevers (VHFs) and identify spatial variation in these respective preparedness demands.
 [Download paper here](http://ehulland.github.io/files/Hulland_2019_BMC_Medicine.pdf)

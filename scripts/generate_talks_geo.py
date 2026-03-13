@@ -9,6 +9,7 @@ import requests
 
 ROOT = os.path.dirname(os.path.dirname(__file__))
 TALKS_DIR = os.path.join(ROOT, '_talks')
+PUBLICATIONS_DIR = os.path.join(ROOT, '_publications')
 CACHED_FILE = os.path.join(ROOT, 'talkmap', 'geocache.json')
 ABOUT_MAP_R_FILE = os.path.join(ROOT, 'map_code.R')
 
@@ -102,6 +103,36 @@ def parse_r_num_vector(content, field):
         nums.append(float(token))
     return nums
 
+def load_publications():
+    """Load publications that have hardcoded lat/lon in their frontmatter."""
+    out = []
+    for fname in sorted(os.listdir(PUBLICATIONS_DIR)):
+        if not fname.endswith('.md'):
+            continue
+        path = os.path.join(PUBLICATIONS_DIR, fname)
+        fm = parse_frontmatter(path)
+        lat = fm.get('lat')
+        lon = fm.get('lon')
+        if lat is None or lon is None:
+            continue  # skip publications without coordinates
+        date = fm.get('date')
+        if isinstance(date, (datetime.date, datetime.datetime)):
+            date_val = date.isoformat()
+        else:
+            date_val = str(date) if date is not None else None
+        out.append({
+            'title': fm.get('title') or fname,
+            'date': date_val,
+            'location': fm.get('map_location') or '',
+            'venue': fm.get('venue') or '',
+            'permalink': fm.get('paperurl') or fm.get('permalink') or None,
+            'lat': float(lat),
+            'lon': float(lon),
+            'type': 'publication',
+        })
+    return out
+
+
 def load_about_locations():
     if not os.path.exists(ABOUT_MAP_R_FILE):
         return []
@@ -178,14 +209,15 @@ def main():
         return str(value)
 
     about_locations = load_about_locations()
-    combined = talks + about_locations
+    publications = load_publications()
+    combined = talks + about_locations + publications
     talks_sanitized = [sanitize(t) for t in combined]
     with open(OUT_FILE, 'w', encoding='utf-8') as f:
         json.dump(talks_sanitized, f, ensure_ascii=False, indent=2)
     with open(ALT_OUT_FILE, 'w', encoding='utf-8') as f:
         json.dump(talks_sanitized, f, ensure_ascii=False, indent=2)
     save_cache(cache)
-    print(f'Wrote {OUT_FILE} and {ALT_OUT_FILE} with {len(talks)} talks + {len(about_locations)} about locations')
+    print(f'Wrote {OUT_FILE} and {ALT_OUT_FILE} with {len(talks)} talks + {len(about_locations)} about locations + {len(publications)} publications')
 
 if __name__ == '__main__':
     main()

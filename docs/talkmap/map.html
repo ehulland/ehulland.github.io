@@ -1,63 +1,104 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>Timeline Map</title>
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
-	<style>html,body,#map{height:100%;margin:0;padding:0}#controls{position:absolute;z-index:400;left:10px;top:10px;background:#fff;padding:10px 12px;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.3);max-width:320px}.map-title{font-weight:700;margin-bottom:2px}.map-subtitle{font-size:.9rem;color:#555;margin-bottom:8px}</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Timeline Map</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+<style>
+html,body,#map { height:100%; margin:0; padding:0; font-family: system-ui, sans-serif; }
+#controls {
+position: absolute; z-index: 400; left: 10px; top: 10px;
+background: #fff; padding: 12px 14px; border-radius: 8px;
+box-shadow: 0 1px 6px rgba(0,0,0,.3); max-width: 240px;
+}
+.map-title   { font-weight: 700; font-size: 1rem; margin-bottom: 2px; }
+.map-subtitle{ font-size: .82rem; color: #555; margin-bottom: 10px; line-height: 1.4; }
+.ctrl-row    { margin-bottom: 8px; }
+.ctrl-row label { font-size: .85rem; font-weight: 600; display: block; margin-bottom: 3px; }
+select       { font-size: .85rem; padding: 2px 4px; width: 100%; }
+.type-row    { display: flex; flex-direction: column; gap: 4px; }
+.type-check  { display: flex; align-items: center; gap: 6px; font-size: .85rem; cursor: pointer; font-weight: normal; }
+.swatch      { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; border: 2px solid rgba(0,0,0,.2); }
+.swatch-talk   { background: #2563eb; border-color: #1d4ed8; }
+.swatch-pub    { background: #0d9488; border-color: #0f766e; }
+.swatch-about  { background: #8b5cf6; border-color: #6d28d9; }
+</style>
 </head>
 <body>
-	<div id="controls">
-		<div class="map-title">Timeline Map</div>
-		<div class="map-subtitle">Talks, milestones, and places I’ve lived or worked</div>
-		<label for="year">Year:</label>
-		<select id="year"><option value="all">All</option></select>
-	</div>
-	<div id="map" style="height:700px"></div>
-
-	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-	<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster-src.js"></script>
-
-	<script>
-		const map = L.map('map').setView([30, 10], 2);
-		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19, attribution: '© OpenStreetMap contributors'}).addTo(map);
-
-		const markers = L.markerClusterGroup({showCoverageOnHover:false, maxClusterRadius: 80});
-		let allTalks = [];
-
-		function populateYearFilter(talks){
-			const years = new Set(talks.map(t => (t.date||'').slice(0,4)).filter(Boolean));
-			const sel = document.getElementById('year');
-			Array.from(years).sort().reverse().forEach(y => {
-				const o = document.createElement('option'); o.value = y; o.textContent = y; sel.appendChild(o);
-			});
-			sel.addEventListener('change', () => renderMarkers());
-		}
-
-		function renderMarkers(){
-			markers.clearLayers();
-			const year = document.getElementById('year').value;
-			const filtered = allTalks.filter(t => t.type === 'about' || year==='all' || ((t.date||'').startsWith(year)));
-			filtered.forEach(t => {
-				const m = t.type === 'about'
-					? L.circleMarker([t.lat, t.lon], {radius:8,color:'#7c3aed',fillColor:'#8b5cf6',fillOpacity:0.8,weight:2})
-					: L.marker([t.lat, t.lon]);
-				const label = t.type === 'about' ? 'About location' : 'Talk';
-				const popup = `<strong>${t.title}</strong><br>${label}<br>${t.date||''}<br>${t.venue||''}<br>${t.location||''}` + (t.permalink?`<br><a href="${t.permalink}">Details</a>`:'');
-				m.bindPopup(popup);
-				markers.addLayer(m);
-			});
-			map.addLayer(markers);
-		}
-
-		fetch('/talkmap/talks.json').then(r=>r.json()).then(data=>{
-			allTalks = data;
-			populateYearFilter(allTalks);
-			renderMarkers();
-		}).catch(err=>{console.error(err);});
-	</script>
+<div id="controls">
+<div class="map-title">Timeline Map</div>
+<div class="map-subtitle">Talks, publications, and about locations</div>
+<div class="ctrl-row">
+<label for="year">Year</label>
+<select id="year"><option value="all">All years</option></select>
+</div>
+<div class="ctrl-row">
+<label>Show</label>
+<div class="type-row">
+<label class="type-check"><input type="checkbox" id="show-talk" checked><span class="swatch swatch-talk"></span> Talks</label>
+<label class="type-check"><input type="checkbox" id="show-pub" checked><span class="swatch swatch-pub"></span> Publications</label>
+<label class="type-check"><input type="checkbox" id="show-about" checked><span class="swatch swatch-about"></span> About locations</label>
+</div>
+</div>
+</div>
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster-src.js"></script>
+<script>
+const map = L.map('map').setView([30, 10], 2);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19, attribution: '&copy; OpenStreetMap contributors'}).addTo(map);
+const clusterGroup = L.markerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 60});
+let allItems = [];
+const TYPE_STYLE = {
+talk:        { color: '#1d4ed8', fillColor: '#2563eb' },
+publication: { color: '#0f766e', fillColor: '#0d9488' },
+about:       { color: '#6d28d9', fillColor: '#8b5cf6' },
+};
+function typeOf(item) { return item.type || 'talk'; }
+function makeMarker(item) {
+const t = typeOf(item);
+const style = TYPE_STYLE[t] || TYPE_STYLE.talk;
+const m = L.circleMarker([item.lat, item.lon], {radius: t === 'about' ? 9 : 8, color: style.color, fillColor: style.fillColor, fillOpacity: 0.85, weight: 2});
+const typeLabel = {talk: 'Talk', publication: 'Publication', about: 'About location'}[t] || t;
+let popup = '<strong>' + item.title + '</strong><br><em>' + typeLabel + '</em>';
+if (item.date)     popup += '<br>' + item.date;
+if (item.venue)    popup += '<br>' + item.venue;
+if (item.location) popup += '<br>&#128205; ' + item.location;
+if (item.permalink) {
+const linkText = t === 'publication' ? 'Read paper' : 'Details';
+popup += '<br><a href="' + item.permalink + '" target="_blank" rel="noopener">' + linkText + ' &nearr;</a>';
+}
+m.bindPopup(popup);
+return m;
+}
+function renderMarkers() {
+clusterGroup.clearLayers();
+const year = document.getElementById('year').value;
+const showTalk  = document.getElementById('show-talk').checked;
+const showPub   = document.getElementById('show-pub').checked;
+const showAbout = document.getElementById('show-about').checked;
+allItems.forEach(item => {
+const t = typeOf(item);
+if (t === 'about'       && !showAbout) return;
+if (t === 'publication' && !showPub)   return;
+if (t === 'talk'        && !showTalk)  return;
+if (t !== 'about' && year !== 'all' && !(item.date||'').startsWith(year)) return;
+clusterGroup.addLayer(makeMarker(item));
+});
+map.addLayer(clusterGroup);
+}
+function populateYearFilter(items) {
+const years = new Set(items.filter(i => typeOf(i) !== 'about').map(i => (i.date||'').slice(0,4)).filter(Boolean));
+const sel = document.getElementById('year');
+Array.from(years).sort().reverse().forEach(y => { const o = document.createElement('option'); o.value = y; o.textContent = y; sel.appendChild(o); });
+sel.addEventListener('change', renderMarkers);
+}
+['show-talk','show-pub','show-about'].forEach(id => document.getElementById(id).addEventListener('change', renderMarkers));
+fetch('/talkmap/talks.json').then(r => r.json()).then(data => { allItems = data; populateYearFilter(allItems); renderMarkers(); }).catch(err => console.error('Could not load talks.json:', err));
+</script>
 </body>
 </html>
+

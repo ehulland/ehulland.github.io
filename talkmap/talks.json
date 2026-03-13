@@ -122,5 +122,75 @@
     "lat": 52.0907,
     "lon": 5.1214,
     "type": "about"
+  },
+  {
+    "title": "The association between stress, coping, and sexual risk behaviors over 24 months among African-American female adolescents",
+    "date": "2014-08-27",
+    "location": "Atlanta, GA, USA",
+    "venue": "Psychology, Health & Medicine",
+    "permalink": "https://www.tandfonline.com/doi/abs/10.1080/13548506.2014.951369",
+    "lat": 33.749,
+    "lon": -84.388,
+    "type": "publication"
+  },
+  {
+    "title": "Parameters associated with design effect of child anthropometry indicators in small-scale field surveys",
+    "date": "2016-11-28",
+    "location": "Sub-Saharan Africa",
+    "venue": "Emerging Themes in Epidemiology",
+    "permalink": "https://ete-online.biomedcentral.com/articles/10.1186/s12982-016-0054-y#citeas",
+    "lat": 0.0,
+    "lon": 20.0,
+    "type": "publication"
+  },
+  {
+    "title": "Travel time to health facilities in areas of outbreak potential: maps for guiding local preparedness and response",
+    "date": "2019-12-30",
+    "location": "Sub-Saharan Africa",
+    "venue": "BMC Medicine",
+    "permalink": "https://link.springer.com/article/10.1186/s12916-019-1459-6",
+    "lat": 0.0,
+    "lon": 20.0,
+    "type": "publication"
+  },
+  {
+    "title": "Patterns of posttraumatic stress symptoms among international humanitarian aid workers",
+    "date": "2020-12-14",
+    "location": "Atlanta, GA, USA",
+    "venue": "Traumatology",
+    "permalink": "https://doi.org/10.1037/trm0000286",
+    "lat": 33.749,
+    "lon": -84.388,
+    "type": "publication"
+  },
+  {
+    "title": "Pandemic preparedness and COVID-19: an exploratory analysis of infection and fatality rates, and contextual factors associated with preparedness in 177 countries, from Jan 1, 2020, to Sept 30, 2021",
+    "date": "2022-02-01",
+    "location": "Seattle, WA, USA",
+    "venue": "The Lancet",
+    "permalink": "https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(22)00172-6/fulltext",
+    "lat": 47.6062,
+    "lon": -122.3321,
+    "type": "publication"
+  },
+  {
+    "title": "Underimmunisation during the 2025 Texas measles outbreak",
+    "date": "2025-06-01",
+    "location": "Texas, USA",
+    "venue": "The Lancet Infectious Diseases",
+    "permalink": "https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(25)00254-3/",
+    "lat": 31.0,
+    "lon": -99.0,
+    "type": "publication"
+  },
+  {
+    "title": "On the importance of communication, advocacy, and information accuracy in destigmatizing mpox disease",
+    "date": "2025-07-25",
+    "location": "USA",
+    "venue": "Scientific Reports",
+    "permalink": "https://www.nature.com/articles/s41598-025-06864-3",
+    "lat": 39.8283,
+    "lon": -98.5795,
+    "type": "publication"
   }
 ]

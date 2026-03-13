@@ -7,6 +7,9 @@ date: 2022-02-01
 venue: 'The Lancet'
 paperurl: 'https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(22)00172-6/fulltext'
 citation: 'Pandemic preparedness and COVID-19: an exploratory analysis of infection and fatality rates, and contextual factors associated with preparedness in 177 countries, from Jan 1, 2020, to Sept 30, 2021. Bollyky, Thomas J and Hulland, Erin N. et al. The Lancet, Volume 399, Issue 10334, 1489 - 1512'
+map_location: 'Seattle, WA, USA'
+lat: 47.6062
+lon: -122.3321
 ---
 Background
 National rates of COVID-19 infection and fatality have varied dramatically since the onset of the pandemic. Understanding the conditions associated with this cross-country variation is essential to guiding investment in more effective preparedness and response for future pandemics.
