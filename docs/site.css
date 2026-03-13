@@ -3,20 +3,37 @@
    ============================================================ */
 *, *::before, *::after { box-sizing: border-box; }
 
+/* ── Pulse (light) ── */
 :root {
   --color-bg:        #ffffff;
-  --color-surface:   #f8f9fa;
-  --color-border:    #dee2e6;
-  --color-text:      #212529;
-  --color-muted:     #6c757d;
-  --color-primary:   #2a6496;
-  --color-primary-h: #1b4f75;
-  --color-hero-bg:   #1b3a5c;
+  --color-surface:   #f9f8fc;
+  --color-border:    #ededed;
+  --color-text:      #444444;
+  --color-muted:     #868e96;
+  --color-primary:   #593196;
+  --color-primary-h: #3d2168;
+  --color-hero-bg:   #593196;
   --color-hero-text: #ffffff;
-  --radius:          6px;
+  --color-link:      #593196;
+  --radius:          0px;
   --shadow:          0 1px 4px rgba(0,0,0,.1);
   --max-width:       1100px;
   --font-sans:       system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ── Vapor (dark) ── */
+[data-theme="dark"] {
+  --color-bg:        #1a0933;
+  --color-surface:   #2a1245;
+  --color-border:    #3d1f6e;
+  --color-text:      #32fbe2;
+  --color-muted:     rgba(50,251,226,.55);
+  --color-primary:   #ea39b8;
+  --color-primary-h: #ff6fdb;
+  --color-hero-bg:   #170229;
+  --color-hero-text: #32fbe2;
+  --color-link:      #32fbe2;
+  --shadow:          0 1px 6px rgba(0,0,0,.45);
 }
 
 html { font-size: 16px; scroll-behavior: smooth; }
@@ -29,7 +46,7 @@ body {
   line-height: 1.65;
 }
 
-a { color: var(--color-primary); text-decoration: none; }
+a { color: var(--color-link); text-decoration: none; }
 a:hover { color: var(--color-primary-h); text-decoration: underline; }
 
 img { max-width: 100%; height: auto; display: block; }
@@ -52,6 +69,30 @@ p { margin-top: 0; }
 }
 
 /* ============================================================
+   Dark-mode toggle button
+   ============================================================ */
+.theme-toggle {
+  margin-left: auto;
+  background: none;
+  border: 1px solid rgba(255,255,255,.35);
+  color: rgba(255,255,255,.88);
+  border-radius: 20px;
+  padding: .2rem .8rem;
+  font-size: .8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  white-space: nowrap;
+  transition: border-color .15s, color .15s;
+}
+.theme-toggle:hover { border-color: #fff; color: #fff; }
+.theme-toggle .icon-sun  { display: none; }
+.theme-toggle .icon-moon { display: inline; }
+[data-theme="dark"] .theme-toggle .icon-sun  { display: inline; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+/* ============================================================
    Navbar
    ============================================================ */
 .navbar {
@@ -70,7 +111,7 @@ p { margin-top: 0; }
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: .25rem 1.25rem;
+  gap: .25rem 1rem;
 }
 
 .navbar a {
@@ -85,7 +126,6 @@ p { margin-top: 0; }
   font-size: 1rem;
   font-weight: 700;
   color: #ffffff;
-  margin-right: auto;
 }
 
 /* ============================================================
@@ -140,7 +180,7 @@ p { margin-top: 0; }
   padding: .45rem 1.1rem;
   background: var(--color-primary);
   color: #ffffff !important;
-  border-radius: var(--radius);
+  border-radius: 20px;
   font-size: .9rem;
   font-weight: 600;
   margin-top: .5rem;
@@ -235,6 +275,25 @@ p { margin-top: 0; }
   font-size: .78rem;
   font-weight: 600;
   margin: .15rem .1rem 0;
+}
+
+/* ============================================================
+   Dark mode card / surface overrides
+   ============================================================ */
+[data-theme="dark"] .card,
+[data-theme="dark"] .list-card {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+}
+[data-theme="dark"] .card p,
+[data-theme="dark"] .meta {
+  color: var(--color-muted);
+}
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4 {
+  color: var(--color-text);
 }
 
 /* ============================================================

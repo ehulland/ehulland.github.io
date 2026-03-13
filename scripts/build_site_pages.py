@@ -281,6 +281,12 @@ def main():
     # Copy stylesheet so it's always present after a build
     if CSS_SRC.exists():
         (DOCS / "site.css").write_bytes(CSS_SRC.read_bytes())
+    # Copy talkmap HTML into docs so the navbar link works
+    talkmap_src = ROOT / "talkmap" / "map.html"
+    talkmap_dst_dir = DOCS / "talkmap"
+    talkmap_dst_dir.mkdir(exist_ok=True)
+    if talkmap_src.exists():
+        (talkmap_dst_dir / "map.html").write_bytes(talkmap_src.read_bytes())
     config = load_site_config(CONFIG)
     author = config.get("author", {}) or {}
     site_title = config.get("title") or author.get("name") or "Site"

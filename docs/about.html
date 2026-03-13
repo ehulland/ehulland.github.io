@@ -4,6 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>About me | Erin (Hulland) Frame, MPH, PhD</title>
+  <script>
+    (function() {
+      var saved = localStorage.getItem("theme");
+      var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (saved === "dark" || (!saved && prefersDark)) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    })();
+  </script>
   <link rel="stylesheet" href="/site.css">
 </head>
 <body>
@@ -16,6 +25,10 @@
       <a href="/talkmap/map.html">Timeline Map</a>
       <a href="/posts.html">Posts</a>
       <a href="/cv.html">CV</a>
+      <button class="theme-toggle" onclick="(function(){var h=document.documentElement;var dark=h.getAttribute('data-theme')==='dark';h.setAttribute('data-theme',dark?'light':'dark');localStorage.setItem('theme',dark?'light':'dark');})()" aria-label="Toggle dark mode">
+        <span class="icon-moon">&#9790;</span>
+        <span class="icon-sun">&#9788;</span>
+      </button>
     </div>
   </nav>
   
