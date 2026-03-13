@@ -11,6 +11,7 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 DOCS = ROOT / "docs"
 CONFIG = ROOT / "_config.yml"
+CSS_SRC = ROOT / "site.css"
 ABOUT_QMD = ROOT / "about.qmd"
 ABOUT_MD = ROOT / "_pages" / "about.md"
 CV_QMD = ROOT / "cv.qmd"
@@ -264,6 +265,9 @@ def load_collection(folder: Path):
 
 def main():
     DOCS.mkdir(exist_ok=True)
+    # Copy stylesheet so it's always present after a build
+    if CSS_SRC.exists():
+        (DOCS / "site.css").write_bytes(CSS_SRC.read_bytes())
     config = load_site_config(CONFIG)
     author = config.get("author", {}) or {}
     site_title = config.get("title") or author.get("name") or "Site"
