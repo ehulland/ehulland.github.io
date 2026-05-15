@@ -311,7 +311,7 @@ def fetch_scholar_metrics(scholar_url: str):
         )
         response.raise_for_status()
     except Exception:
-    return cached or default
+        return cached or default
 
     rows = re.findall(r"<tr[^>]*>(.*?)</tr>", response.text, flags=re.S | re.I)
     values = {}
