@@ -292,54 +292,54 @@ def talk_card(item):
 
 
 def fetch_scholar_metrics(scholar_url: str):
-    default = {
-        "citations": "N/A",
-        "h_index": "N/A",
-        "i10_index": "N/A",
-        "pub_count": "N/A",
-    }
+  default = {
+    "citations": "N/A",
+    "h_index": "N/A",
+    "i10_index": "N/A",
+    "pub_count": "N/A",
+  }
   cached = load_yaml_file(SCHOLAR_CACHE)
-    if not scholar_url:
+  if not scholar_url:
     return cached or default
 
-    try:
-        url_with_pagesize = scholar_url if "pagesize" in scholar_url else scholar_url + "&pagesize=100"
-        response = requests.get(
-            url_with_pagesize,
-            timeout=15,
-            headers={"User-Agent": "Mozilla/5.0"},
-        )
-        response.raise_for_status()
-    except Exception:
-        return cached or default
+  try:
+    url_with_pagesize = scholar_url if "pagesize" in scholar_url else scholar_url + "&pagesize=100"
+    response = requests.get(
+      url_with_pagesize,
+      timeout=15,
+      headers={"User-Agent": "Mozilla/5.0"},
+    )
+    response.raise_for_status()
+  except Exception:
+    return cached or default
 
-    rows = re.findall(r"<tr[^>]*>(.*?)</tr>", response.text, flags=re.S | re.I)
-    values = {}
-    for row in rows:
-        m_name = re.search(r'<td[^>]*class="gsc_rsb_sc1"[^>]*>(.*?)</td>', row, flags=re.S | re.I)
-        m_value = re.search(r'<td[^>]*class="gsc_rsb_std"[^>]*>(.*?)</td>', row, flags=re.S | re.I)
-        if not (m_name and m_value):
-            continue
-        name = re.sub(r"<.*?>", "", m_name.group(1)).strip().lower()
-        value = re.sub(r"<.*?>", "", m_value.group(1)).strip()
-        value = html.unescape(value)
-        values[name] = value
+  rows = re.findall(r"<tr[^>]*>(.*?)</tr>", response.text, flags=re.S | re.I)
+  values = {}
+  for row in rows:
+    m_name = re.search(r'<td[^>]*class="gsc_rsb_sc1"[^>]*>(.*?)</td>', row, flags=re.S | re.I)
+    m_value = re.search(r'<td[^>]*class="gsc_rsb_std"[^>]*>(.*?)</td>', row, flags=re.S | re.I)
+    if not (m_name and m_value):
+      continue
+    name = re.sub(r"<.*?>", "", m_name.group(1)).strip().lower()
+    value = re.sub(r"<.*?>", "", m_value.group(1)).strip()
+    value = html.unescape(value)
+    values[name] = value
 
-    pub_rows = re.findall(r'<tr[^>]*class="[^"]*gsc_a_tr[^"]*"[^>]*>', response.text, flags=re.I)
-    pub_count = str(len(pub_rows)) if pub_rows else default["citations"]
+  pub_rows = re.findall(r'<tr[^>]*class="[^"]*gsc_a_tr[^"]*"[^>]*>', response.text, flags=re.I)
+  pub_count = str(len(pub_rows)) if pub_rows else default["pub_count"]
 
-    metrics = {
-        "citations": values.get("citations", default["citations"]),
-        "h_index": values.get("h-index", default["h_index"]),
-        "i10_index": values.get("i10-index", default["i10_index"]),
-        "pub_count": pub_count,
-    }
+  metrics = {
+    "citations": values.get("citations", default["citations"]),
+    "h_index": values.get("h-index", default["h_index"]),
+    "i10_index": values.get("i10-index", default["i10_index"]),
+    "pub_count": pub_count,
+  }
 
-    if all(value != "N/A" for value in metrics.values()):
-      write_yaml_file(SCHOLAR_CACHE, metrics)
-      return metrics
+  if all(value != "N/A" for value in metrics.values()):
+    write_yaml_file(SCHOLAR_CACHE, metrics)
+    return metrics
 
-    return cached or metrics
+  return cached or metrics
 
 
 def cv_section_list(items, tab_path, tab_label):
