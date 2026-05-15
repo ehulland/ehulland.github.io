@@ -193,6 +193,20 @@ def render_about(site_title, author, about_html, avatar):
     name = author.get("name", "")
     bio = author.get("bio", "")
     location = author.get("location", "")
+    github = author.get("github", "")
+    linkedin = author.get("linkedin", "")
+    twitter = author.get("twitter", "")
+    googlescholar = author.get("googlescholar", "")
+    social = []
+    if github:
+        social.append(f'<a class="social-icon" href="https://github.com/{html.escape(github)}" aria-label="GitHub" title="GitHub">{ICON_GITHUB}</a>')
+    if linkedin:
+        social.append(f'<a class="social-icon" href="https://www.linkedin.com/in/{html.escape(linkedin)}" aria-label="LinkedIn" title="LinkedIn">{ICON_LINKEDIN}</a>')
+    if twitter:
+        social.append(f'<a class="social-icon" href="https://x.com/{html.escape(twitter)}" aria-label="X (Twitter)" title="X (Twitter)">{ICON_X}</a>')
+    if googlescholar:
+        social.append(f'<a class="social-icon" href="{html.escape(googlescholar)}" aria-label="Google Scholar" title="Google Scholar">{ICON_SCHOLAR}</a>')
+    social_html = '<div class="social-icons">' + "".join(social) + '</div>' if social else ""
     content = f'''
   <main class="container content page">
     <div class="profile-header">
@@ -201,6 +215,7 @@ def render_about(site_title, author, about_html, avatar):
         <h1>{html.escape(name)}</h1>
         <p class="lead">{html.escape(bio)}</p>
         <p><strong>Location:</strong> {html.escape(location)}</p>
+        {social_html}
       </div>
     </div>
     <section class="richtext">{about_html}</section>
@@ -263,13 +278,15 @@ def fetch_scholar_metrics(scholar_url: str):
         "citations": "N/A",
         "h_index": "N/A",
         "i10_index": "N/A",
+        "pub_count": "N/A",
     }
     if not scholar_url:
         return default
 
     try:
+        url_with_pagesize = scholar_url if "pagesize" in scholar_url else scholar_url + "&pagesize=100"
         response = requests.get(
-            scholar_url,
+            url_with_pagesize,
             timeout=15,
             headers={"User-Agent": "Mozilla/5.0"},
         )
@@ -289,10 +306,14 @@ def fetch_scholar_metrics(scholar_url: str):
         value = html.unescape(value)
         values[name] = value
 
+    pub_rows = re.findall(r'<tr[^>]*class="[^"]*gsc_a_tr[^"]*"[^>]*>', response.text, flags=re.I)
+    pub_count = str(len(pub_rows)) if pub_rows else default["citations"]
+
     return {
         "citations": values.get("citations", default["citations"]),
         "h_index": values.get("h-index", default["h_index"]),
         "i10_index": values.get("i10-index", default["i10_index"]),
+        "pub_count": pub_count,
     }
 
 
@@ -332,7 +353,7 @@ def cv_page(site_title, author, cv_html, publications, talks):
     <section class="metric-grid">
       <article class="metric-card">
         <h3>Publications</h3>
-        <p class="metric-value">{len(publications)}</p>
+        <p class="metric-value">{html.escape(str(scholar.get("pub_count", len(publications))))}</p>
       </article>
       <article class="metric-card">
         <h3>Citations</h3>
