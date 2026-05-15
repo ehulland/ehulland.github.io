@@ -19,6 +19,7 @@ CV_QMD = ROOT / "cv.qmd"
 POSTS = ROOT / "_posts"
 PUBLICATIONS = ROOT / "_publications"
 TALKS = ROOT / "_talks"
+SCHOLAR_CACHE = ROOT / "scholar_metrics.yml"
 MAP_LABEL = "Timeline Map"
 
 
@@ -31,6 +32,16 @@ def load_site_config(path: Path):
   text = re.sub(r":\s*&[A-Za-z0-9_-]+\s+", ": ", text)
   text = re.sub(r"\*[A-Za-z0-9_-]+", "", text)
   return yaml.safe_load(text) or {}
+
+
+def load_yaml_file(path: Path):
+  if not path.exists():
+    return {}
+  return yaml.safe_load(read_text(path)) or {}
+
+
+def write_yaml_file(path: Path, data):
+  path.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
 
 
 def parse_frontmatter(path: Path):
@@ -287,8 +298,9 @@ def fetch_scholar_metrics(scholar_url: str):
         "i10_index": "N/A",
         "pub_count": "N/A",
     }
+  cached = load_yaml_file(SCHOLAR_CACHE)
     if not scholar_url:
-        return default
+    return cached or default
 
     try:
         url_with_pagesize = scholar_url if "pagesize" in scholar_url else scholar_url + "&pagesize=100"
@@ -299,7 +311,7 @@ def fetch_scholar_metrics(scholar_url: str):
         )
         response.raise_for_status()
     except Exception:
-        return default
+    return cached or default
 
     rows = re.findall(r"<tr[^>]*>(.*?)</tr>", response.text, flags=re.S | re.I)
     values = {}
@@ -316,12 +328,18 @@ def fetch_scholar_metrics(scholar_url: str):
     pub_rows = re.findall(r'<tr[^>]*class="[^"]*gsc_a_tr[^"]*"[^>]*>', response.text, flags=re.I)
     pub_count = str(len(pub_rows)) if pub_rows else default["citations"]
 
-    return {
+    metrics = {
         "citations": values.get("citations", default["citations"]),
         "h_index": values.get("h-index", default["h_index"]),
         "i10_index": values.get("i10-index", default["i10_index"]),
         "pub_count": pub_count,
     }
+
+    if all(value != "N/A" for value in metrics.values()):
+      write_yaml_file(SCHOLAR_CACHE, metrics)
+      return metrics
+
+    return cached or metrics
 
 
 def cv_section_list(items, tab_path, tab_label):

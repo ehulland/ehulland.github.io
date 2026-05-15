@@ -54,7 +54,11 @@ Skills
 	
 Peer Review
 ======
-	* Ad hoc reviewer for various journals including BMC Infectious Diseases, BMC Medicine, BMC Public Health, Communications Medicine, Conflict and Health, Discover Public Health, Health Science Reports, International Journal of STDs & AIDS, Journal of Health, Population and Nutrition, Pediatric Research, PLOS One, PLOS Digital Health, epiDAMIK @ KDD conference
+* Ad hoc reviewer for various journals including BMC Infectious Diseases, 
+BMC Medicine, BMC Public Health, Communications Medicine, Conflict and Health,
+Discover Public Health, Health Science Reports, International Journal of STDs & AIDS,
+Journal of Health, Population and Nutrition, Pediatric Research, PLOS One, 
+PLOS Digital Health, epiDAMIK @ KDD conference
 
 Selected publications
 ======
