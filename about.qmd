@@ -11,18 +11,18 @@ title: "About"
 
 * Experience in international health, pandemic preparedness, and outbreak response with a strong interest in data science, statistics, and geospatial analyses.
 
-* Research goals include improving pandemic preparedness modeling and response for diseases of epidemic potential. Experience in geospatial analysis, forecasting, survey design and analysis, and hierarchical modeling. Proficient in R, SAS, Git processes, some experience in Python. 
+* Research goals include improving pandemic preparedness, understanding social and behavioral drivers of infectious disease spread, investigating the role of misinformation and mistrust in society on health-related outcomes, and response for diseases of epidemic potential. Experience in geospatial analysis, forecasting, survey design and analysis, and hierarchical modeling. Proficient in R, SAS, Git processes, some experience in Python. 
 
-* Relevant coursework includes: Time series analysis, Maximum likelihood estimation Hierarchical modeling, Geospatial analysis.
+* Relevant coursework includes: Time series analysis, Maximum likelihood estimation, Hierarchical modeling, Geospatial analysis.
 
-* Extracurricular activities include spending time with my husband, two young kids, and our dog exploring our new residence in Utrecht, Netherlands. 
+* Extracurricular activities include spending time with my husband, two young kids, and our dog exploring our new residence in Utrecht, sewing, and diving into a good thriller novel. 
 
 * Full CV available upon request
 
 ## Contact
 
-- [Email](e.hulland@gmail.com)
+- [Email](email: e.hulland@gmail.com)
 - [GitHub](https://github.com/ehulland)
-- [X](https://x.com/ehulland/)
+- [X](https://x.com/erin_hulland/)
 - [LinkedIn](https://www.linkedin.com/in/ehulland/)
 

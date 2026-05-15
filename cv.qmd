@@ -44,13 +44,17 @@ Skills
 	* Dutch (Beginner)
 * Software and packages:
 	* R software(Advanced)
-		* Tidyverse, data.table, ggplot2, EpiNow2, EpiEstim, EpiSewer, xgboost, Rshiny, glmnet, stan, forecast, surveillance, keras, incidence, projections, raster, sf, terra, rgdal, gdistance, seegSDM
+		* tidyverse, data.table, ggplot2, EpiNow2, EpiEstim, EpiSewer, xgboost, Rshiny, glmnet, forecast, surveillance, keras, incidence, projections, raster, sf, terra, rgdal, gdistance, seegSDM, episomer, gtrendsR
 	* Microsoft Excel, Office, Word, and Powerpoint (Advanced)
+	* GitHub and Git processes (Intermediate)
 	* SAS and SAS-callable SUDAAN (Intermediate, formerly advanced)
-	* VSCode (Intermediate)
 	* Python (Intermediate)
-		* numpy, matplotlib, transformers, argparse, ollama 
+		* numpy, matplotlib, transformers, argparse, ollama, getpass, urllib 
 	* SQL (Basic)
+	
+Peer Review
+======
+	* Ad hoc reviewer for various journals including BMC Infectious Diseases, BMC Medicine, BMC Public Health, Communications Medicine, Conflict and Health, Discover Public Health, Health Science Reports, International Journal of STDs & AIDS, Journal of Health, Population and Nutrition, Pediatric Research, PLOS One, PLOS Digital Health, epiDAMIK @ KDD conference
 
 Selected publications
 ======
