@@ -25,5 +25,5 @@ title: "About"
 - [GitHub](https://github.com/ehulland)
 - [X](https://x.com/erin_hulland/)
 - [LinkedIn](https://www.linkedin.com/in/ehulland/)
-- [Bluesky](https://bsky.app/profile/ehulland.bsky.social)]
+- [Bluesky](https://bsky.app/profile/ehulland.bsky.social)
 
