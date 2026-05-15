@@ -137,6 +137,7 @@ ICON_GITHUB = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width
 ICON_LINKEDIN = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>'
 ICON_X = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>'
 ICON_SCHOLAR = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M12 3L1 9l11 6 11-6-11-6zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>'
+ICON_BLUESKY = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.204-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/></svg>'
 
 def render_home(site_title, author, avatar):
     name = author.get("name", "")
@@ -146,6 +147,7 @@ def render_home(site_title, author, avatar):
     linkedin = author.get("linkedin", "")
     twitter = author.get("twitter", "")
     googlescholar = author.get("googlescholar", "")
+    bluesky = author.get("bluesky", "")
     social = []
     if github:
         social.append(f'<a class="social-icon" href="https://github.com/{html.escape(github)}" aria-label="GitHub" title="GitHub">{ICON_GITHUB}</a>')
@@ -153,6 +155,8 @@ def render_home(site_title, author, avatar):
         social.append(f'<a class="social-icon" href="https://www.linkedin.com/in/{html.escape(linkedin)}" aria-label="LinkedIn" title="LinkedIn">{ICON_LINKEDIN}</a>')
     if twitter:
         social.append(f'<a class="social-icon" href="https://x.com/{html.escape(twitter)}" aria-label="X (Twitter)" title="X (Twitter)">{ICON_X}</a>')
+    if bluesky:
+        social.append(f'<a class="social-icon" href="https://bsky.app/profile/{html.escape(bluesky)}" aria-label="Bluesky" title="Bluesky">{ICON_BLUESKY}</a>')
     if googlescholar:
         social.append(f'<a class="social-icon" href="{html.escape(googlescholar)}" aria-label="Google Scholar" title="Google Scholar">{ICON_SCHOLAR}</a>')
     social_html = '<div class="social-icons">' + "".join(social) + '</div>' if social else ""
@@ -197,6 +201,7 @@ def render_about(site_title, author, about_html, avatar):
     linkedin = author.get("linkedin", "")
     twitter = author.get("twitter", "")
     googlescholar = author.get("googlescholar", "")
+    bluesky = author.get("bluesky", "")
     social = []
     if github:
         social.append(f'<a class="social-icon" href="https://github.com/{html.escape(github)}" aria-label="GitHub" title="GitHub">{ICON_GITHUB}</a>')
@@ -204,6 +209,8 @@ def render_about(site_title, author, about_html, avatar):
         social.append(f'<a class="social-icon" href="https://www.linkedin.com/in/{html.escape(linkedin)}" aria-label="LinkedIn" title="LinkedIn">{ICON_LINKEDIN}</a>')
     if twitter:
         social.append(f'<a class="social-icon" href="https://x.com/{html.escape(twitter)}" aria-label="X (Twitter)" title="X (Twitter)">{ICON_X}</a>')
+    if bluesky:
+        social.append(f'<a class="social-icon" href="https://bsky.app/profile/{html.escape(bluesky)}" aria-label="Bluesky" title="Bluesky">{ICON_BLUESKY}</a>')
     if googlescholar:
         social.append(f'<a class="social-icon" href="{html.escape(googlescholar)}" aria-label="Google Scholar" title="Google Scholar">{ICON_SCHOLAR}</a>')
     social_html = '<div class="social-icons">' + "".join(social) + '</div>' if social else ""
