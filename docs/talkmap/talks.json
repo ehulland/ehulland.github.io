@@ -54,6 +54,15 @@
     "lon": 2.177073
   },
   {
+    "title": "Frontrunner 5 – Planes, Ports, Pipes, and Posts: Tracking a virus from import to detection.",
+    "date": "2026-10-08",
+    "location": "Rotterdam, Netherlands",
+    "venue": "2026 4th Annual Pandemic and Disaster Preparedness Congress",
+    "permalink": "/talks/2026-10-08-PDPC",
+    "lat": 51.9244424,
+    "lon": 4.47775
+  },
+  {
     "title": "About: London, Canada",
     "date": null,
     "location": "London, Canada",
@@ -189,6 +198,26 @@
     "location": "USA",
     "venue": "Scientific Reports",
     "permalink": "https://www.nature.com/articles/s41598-025-06864-3",
+    "lat": 39.8283,
+    "lon": -98.5795,
+    "type": "publication"
+  },
+  {
+    "title": "Estimating time-varying cholera transmission and oral cholera vaccine effectiveness in Haiti and Cameroon, 2021−2023",
+    "date": "2026-05-26",
+    "location": "USA",
+    "venue": "BMJ Open",
+    "permalink": "https://bmjopen.bmj.com/content/16/5/e113520",
+    "lat": 39.8283,
+    "lon": -98.5795,
+    "type": "publication"
+  },
+  {
+    "title": "Estimating time-varying cholera transmission and oral cholera vaccine effectiveness in Haiti and Cameroon, 2021−2023",
+    "date": "2026-05-26",
+    "location": "USA",
+    "venue": "BMJ Open",
+    "permalink": "https://bmjopen.bmj.com/content/16/5/e113520",
     "lat": 39.8283,
     "lon": -98.5795,
     "type": "publication"
