@@ -5,15 +5,13 @@ title: "About"
 
 * Currently working as postdoc in the [Department of Viroscience at Erasmus MC](https://www.erasmusmc.nl/en/research/departments/viroscience), [GGD Rotterdam-Rijnmond](https://www.ggdrotterdamrijnmond.nl/), and the [Pandemic and Disaster Preparedness Center](https://convergence.nl/pandemic-disaster-preparedness-center/) working on the [Frontrunner 5 Project: Integrated early-warning surveillance methods and tools](https://convergence.nl/pandemic-disaster-preparedness-center/research/integrated-early-warning-surveillance-methods-and-tools/).
 
-* Previously worked as a postdoctoral research consultant in the [Majumder Lab](https://lab.maimunamajumder.com/) at Boston Children's Hospital and Harvard Medical School, focusing on the role of trust (and mistrust) in society and on pandemic preparedness and response. 
+* Previously worked as a postdoctoral research consultant in the [Majumder Lab](https://lab.maimunamajumder.com/) at Boston Children's Hospital and Harvard Medical School, focusing on infectious disease transmission using novel data sources and computational techniques, as well as understanding sociopolitical drivers of diseases. 
 
-* PhD graduate in [Global Health - Metrics Track](https://globalhealth.washington.edu/education-training/phd-gh) from the University of Washington, advised by [Dr. David Pigott](https://globalhealth.washington.edu/faculty/david-pigott) focusing on pandemic preparedness and the response to COVID-19. 
+* PhD graduate in [Global Health - Metrics Track](https://globalhealth.washington.edu/education-training/phd-gh) from the University of Washington, advised by [Dr. David Pigott](https://globalhealth.washington.edu/faculty/david-pigott) focusing on pandemic preparedness and the response to COVID-19, with an added emphasis on geospatial analytics to assess zoonotic (re-)emergence. 
 
-* Experience in international health, pandemic preparedness, and outbreak response with a strong interest in data science, statistics, and geospatial analyses.
+* Experience in international health, pandemic preparedness, and outbreak response with a strong interest in data analytics and visualization, statistics, and geospatial analyses.
 
-* Research goals include improving pandemic preparedness, understanding social and behavioral drivers of infectious disease spread, investigating the role of misinformation and mistrust in society on health-related outcomes, and response for diseases of epidemic potential. Experience in geospatial analysis, forecasting, survey design and analysis, and hierarchical modeling. Proficient in R, SAS, Git processes, some experience in Python. 
-
-* Relevant coursework includes: Time series analysis, Maximum likelihood estimation, Hierarchical modeling, Geospatial analysis.
+* Research goals include improving pandemic preparedness, understanding social and behavioral drivers of infectious disease spread, investigating the role of misinformation and mistrust in society on health-related outcomes, and response for diseases of epidemic potential. Experience in geospatial analysis, forecasting, survey design and analysis, Bayesian analyses, and hierarchical modeling. Proficient in R, SAS, Git processes, some experience in Python and in Stan processes. 
 
 * Extracurricular activities include spending time with my husband, two young kids, and our dog exploring our new residence in Utrecht, sewing, and diving into a good thriller novel. 
 
