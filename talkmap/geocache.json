@@ -22,5 +22,9 @@
   "Barcelona, Spain": {
     "lat": 41.3825802,
     "lon": 2.177073
+  },
+  "Rotterdam, Netherlands": {
+    "lat": 51.9244424,
+    "lon": 4.47775
   }
 }

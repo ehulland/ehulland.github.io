@@ -7,7 +7,7 @@ date: 2014-08-27
 venue: 'Psychology, Health & Medicine'
 paperurl: 'https://www.tandfonline.com/doi/abs/10.1080/13548506.2014.951369'
 citation: 'Erin N. Hulland, Jennifer L. Brown, Andrea L. Swartzendruber, Jessica M. Sales, Eve S. Rose & Ralph J. DiClemente (2015) The association between stress, coping, and sexual risk behaviors over 24 months among African-American female adolescents, Psychology, Health & Medicine, 20:4, 443-456, DOI: 10.1080/13548506.2014.951369'
-map_location: 'Atlanta, GA, USA'
+map_location: 'USA'
 lat: 33.749
 lon: -84.388
 ---

@@ -7,7 +7,7 @@ date: 2020-12-14
 venue: 'Traumatology'
 paperurl: 'https://doi.org/10.1037/trm0000286'
 citation: 'Greene-Cramer, B. J., Hulland, E. N., Russell, S. P., Eriksson, C. B., & Lopes-Cardozo, B. (2021). Patterns of posttraumatic stress symptoms among international humanitarian aid workers. Traumatology, 27(2), 177'
-map_location: 'Atlanta, GA, USA'
+map_location: 'USA'
 lat: 33.749
 lon: -84.388
 ---

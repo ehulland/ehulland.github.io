@@ -7,7 +7,7 @@ date: 2025-06-01
 venue: 'The Lancet Infectious Diseases'
 paperurl: 'https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(25)00254-3/'
 citation: 'Underimmunisation during the 2025 Texas measles outbreak. 2025. Hulland, Erin N. et al. The Lancet Infectious Diseases, Volume 25, Issue 6, 607-609'
-map_location: 'Texas, USA'
+map_location: 'USA'
 lat: 31.0
 lon: -99.0
 ---
